@@ -1,0 +1,27 @@
+{
+  "name": "messageglobal",
+  "version": "1.0.0",
+  "description": "servidor do chat",
+  "main": "src/server.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "nodde src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LucasSalesMoreira/MessageGlobal.git"
+  },
+  "keywords": [
+    "mecatronico15*"
+  ],
+  "author": "Lucas Sales Moreira Cordeiro",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LucasSalesMoreira/MessageGlobal/issues"
+  },
+  "homepage": "https://github.com/LucasSalesMoreira/MessageGlobal#readme"
+}
