@@ -9,7 +9,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "nodde src/server.js"
+    "test": "node src/server.js"
   },
   "repository": {
     "type": "git",
