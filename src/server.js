@@ -1,20 +1,24 @@
 const express = require('express');
 const app = express();
+
+//---------- CRIA AS ROTAS MIKAIO.
+app.use(express.static(__dirname + '/public'));
+
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
-app.use(express.static(__dirname + '/public'));
-app.get('/teste', (request, response) => response.sendFile('index.html'));
-
-//---------- CRIA AS ROTAS MIKAIO.
-
 io.on('connection', (socket) => {
-    console.log(socket.id);
+    console.log(`User ${socket.id} connected!`);
 
     socket.on('test1', (parameter) => {
         console.log(parameter);
     });
 
+    socket.on('disconnect', () => {
+        console.log(`User ${socket.id} disconnected!`);
+    });
+
 });
 
 http.listen(process.env.PORT || 3000, () => console.log('Servidor rodando!!!'));
+//http.listen(process.env.PORT || 3000, '192.168.1.66', () => console.log('Servidor rodando!!!'));
