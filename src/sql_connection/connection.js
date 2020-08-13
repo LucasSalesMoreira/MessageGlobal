@@ -10,14 +10,33 @@ const connection = {
             database: 'bd_messageglobal'
         });
     },
+
     //insert
-    //select
-    searsh: function() {
+    create: function(sql) {
         var conn = this.connectDataBase();
         if (conn) {
-            conn.query("select * from User", (error, results, fields) => {
+            conn.query(sql, (error, results, fields) => {
                 if (error) {
-                    console.log('>>>> Falha na busca');
+                    console.log('>>>> Falha ao executar a query: '+sql);
+                    console.log(error);
+                    conn.end();
+                } else {
+                    console.log('>>>> Cadastro realizado!');
+                    conn.end();
+                }
+            });
+        } else {
+            console.log('>>>> Falha na conexão com o banco de dados!');
+        }
+    },
+
+    //select
+    searsh: function(sql) {
+        var conn = this.connectDataBase();
+        if (conn) {
+            conn.query(sql, (error, results, fields) => {
+                if (error) {
+                    console.log('>>>> Falha ao executar a query: '+sql);
                     console.log(error);
                     conn.end();
                 } else {
@@ -26,12 +45,48 @@ const connection = {
                     conn.end();
                 }
             });
+        } else {
+            console.log('>>>> Falha na conexão com o banco de dados!');
         }
-    } 
+    },
+
     //update
-    //delet
+    update: function(sql) {
+        var conn = this.connectDataBase();
+        if (conn) {
+            conn.query(sql, (error, results, fields) => {
+                if (error) {
+                    console.log('>>>> Falha ao executar a query: '+sql);
+                    console.log(error);
+                    conn.end();
+                } else {
+                    console.log('>>>> Atualização realizada!');
+                    conn.end();
+                }
+            });
+        } else {
+            console.log('>>>> Falha na conexão com o banco de dados!');
+        }
+    },
+    
+    //delete
+    delete: function(sql) {
+        var conn =  this.connectDataBase();
+        if (conn) {
+            conn.query(sql, (error, results, fields) => {
+                if (error) {
+                    console.log('>>>> Falha ao executar a query: '+sql);
+                    console.log(error);
+                    conn.end();
+                } else {
+                    console.log('>>>> Exclusão realizada!');
+                    conn.end();
+                }
+            });
+        } else {
+            console.log('>>>> Falha na conexão com o banco de dados!');
+        }
+    }
 };
 
-//console.log(connection.connect());
-connection.searsh();
-//module.exports = connection;
+module.exports = connection;
