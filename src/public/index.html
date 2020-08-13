@@ -1,6 +1,9 @@
 <html>
     <head>
-
+        <script src="/socket.io/socket.io.js">
+            const socket = io('http://localhost:3000');
+            socket.emit('test1', 'Testando comunicação via WebSocket.');
+        </script>
     </head>
     <body>
         <h1>Bem vindo ao inicio de tudo!</h1>
