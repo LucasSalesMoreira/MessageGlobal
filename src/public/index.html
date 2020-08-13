@@ -1,7 +1,8 @@
 <html>
     <head>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js">
-            const socket = io('https://messageglobal.herokuapp.com:3000');
+            //const socket = io('https://messageglobal.herokuapp.com');
+            const socket = io('https://192.168.1.66:5000');
             socket.emit('test1', 'Testando comunicação via WebSocket.');
         </script>
     </head>
