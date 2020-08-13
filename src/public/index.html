@@ -1,13 +1,20 @@
 <html>
     <head>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js">
-            //const socket = io('https://messageglobal.herokuapp.com');
-            const socket = io('https://192.168.1.66:5000');
-            socket.emit('test1', 'Testando comunicação via WebSocket.');
-        </script>
+        <script src="/socket.io/socket.io.js"></script>
     </head>
     <body>
         <h1>Bem vindo ao inicio de tudo!</h1>
         <img src="https://www.iuemag.com/february2015/di/images/iu-e-magazine-to-begin-is-to-succeed-journey-literature-writer-start-creaive-talent-inspiring-share-quotes.jpg"/>
+        
+        
+        <script>
+            const socket = io('https://messageglobal.herokuapp.com');
+            //const socket = io('http://192.168.1.66:3000');
+            socket.on('connect', () => {
+                socket.emit('test1', 'Testando comunicação via WebSocket.');
+            });
+        </script>
+    
+
     </body>
 </html>
