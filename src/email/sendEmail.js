@@ -1,6 +1,5 @@
 module.exports = (email) => {
     const nodemailer = require('nodemailer');
-    //const smtp = require('nodemailer-smtp-transport');
 
     const myEmail = 'lucasdevsoftware@gmail.com';
     
@@ -19,7 +18,7 @@ module.exports = (email) => {
 
     var body = {
         from: myEmail,
-        to: email,
+        to: [email],
         subject: 'Validação de email: 967921',
         html: '<h3>Seja bem vindo ao nosso app!</h3>'
     };
