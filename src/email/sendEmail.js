@@ -1,19 +1,21 @@
 module.exports = (email) => {
     const nodemailer = require('nodemailer');
-    const smtp = require('nodemailer-smtp-transport');
+    //const smtp = require('nodemailer-smtp-transport');
 
     const myEmail = 'lucasdevsoftware@gmail.com';
     
-    console.log(process.env.EMAIL_PASS);
-    
-    const transport = nodemailer.createTransport(smtp({
-        service: 'gmail',
+    const transport = nodemailer.createTransport({
         host: 'smtp.gmail.com',
+        port: 587,
+        secure: false,
         auth: {
             user: myEmail,
             pass: process.env.EMAIL_PASS,
+        },
+        tls: {
+            rejectUnauthorized: false
         }
-    }));
+    });
 
     var body = {
         from: myEmail,
