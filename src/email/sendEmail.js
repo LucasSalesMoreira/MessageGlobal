@@ -17,7 +17,7 @@ module.exports = (email) => {
     });
 
     var body = {
-        from: myEmail,
+        from: `Sales App <${myEmail}>`,
         to: [email],
         subject: 'Validação de email: 967921',
         html: '<h3>Seja bem vindo ao nosso app!</h3>'
