@@ -21,7 +21,14 @@ io.on('connection', (socket) => {
         console.log(`Dados de acesso -> nome: ${name} senha: ${password}`);
     });
 
-    socket.on('new_user', () => {});
+    socket.on('new_user', (userData) => {
+        var name = userData.name;
+        var password = userData.password;
+        var email = userData.email;
+        //Enviar email de confirmação.
+        const sendEmail = require('./email/sendEmail.js');
+        sendEmail(email);
+    });
 
     socket.on('disconnect', () => {
         console.log(`User ${socket.id} disconnected!`);
