@@ -19,7 +19,7 @@
             function send() {
                 var name = document.getElementById('name').value;
                 var password = document.getElementById('password').value;
-                io.emit('login', {name: name, password: password});
+                socket.emit('login', {name: name, password: password});
             }
 
         </script>
