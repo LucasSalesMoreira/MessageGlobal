@@ -14,6 +14,15 @@ io.on('connection', (socket) => {
         console.log(parameter);
     });
 
+    socket.on('login', (userData) => {
+        var name = userData.name;
+        var password = userData.password;
+
+        console.log(`Dados de acesso -> nome: ${name} senha: ${password}`);
+    });
+
+    socket.on('new_user', () => {});
+
     socket.on('disconnect', () => {
         console.log(`User ${socket.id} disconnected!`);
     });
