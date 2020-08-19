@@ -3,6 +3,8 @@ module.exports = (email) => {
 
     const myEmail = 'lucasdevsoftware@gmail.com';
     
+    console.log(process.env.EMAIL_PASS);
+    
     const transport = nodemailer.createTransport({
         service: 'gmail',
         auth: {
