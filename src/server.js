@@ -4,6 +4,11 @@ const app = express();
 //---------- CRIA AS ROTAS MIKAIO.
 app.use(express.static(__dirname + '/public'));
 
+app.get('sendemail', (rec, res) => {
+    res.redirect('https://lucassalestestes.000webhostapp.com/'
+    +'sendEmail.php?email=lucassalesmoreira161@gmail.com');
+});
+
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
@@ -26,8 +31,10 @@ io.on('connection', (socket) => {
         var password = userData.password;
         var email = userData.email;
         //Enviar email de confirmação.
+        /*
         const sendEmail = require('./email/sendEmail.js');
-        sendEmail(email);
+        sendEmail(email);*/
+
     });
 
     socket.on('disconnect', () => {
