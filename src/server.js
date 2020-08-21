@@ -5,8 +5,7 @@ const app = express();
 app.use(express.static(__dirname + '/public'));
 
 app.get('sendemail', (rec, res) => {
-    res.redirect('https://lucassalestestes.000webhostapp.com/'
-    +'sendEmail.php?email=lucassalesmoreira161@gmail.com');
+    res.send('https://lucassalestestes.000webhostapp.com/sendEmail.php?email=lucassalesmoreira161@gmail.com');
 });
 
 const http = require('http').createServer(app);
