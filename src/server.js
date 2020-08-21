@@ -4,7 +4,7 @@ const app = express();
 //---------- CRIA AS ROTAS MIKAIO.
 app.use(express.static(__dirname + '/public'));
 
-app.get('sendemail', (rec, res) => {
+app.get('/sendemail', (rec, res) => {
     res.send('https://lucassalestestes.000webhostapp.com/sendEmail.php?email=lucassalesmoreira161@gmail.com');
 });
 
