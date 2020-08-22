@@ -4,6 +4,11 @@ const app = express();
 //---------- CRIA AS ROTAS MIKAIO.
 app.use(express.static(__dirname + '/public'));
 
+app.get('/sendemail', (rec, res) => {
+    //host externo pra envio de email de autenticação.
+    res.redirect(`https://lucassalestestes.000webhostapp.com/sendEmail.php?email=${email}`);
+});
+
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
@@ -29,7 +34,6 @@ io.on('connection', (socket) => {
         /*
         const sendEmail = require('./email/sendEmail.js');
         sendEmail(email);*/
-        app.response.redirect(`https://lucassalestestes.000webhostapp.com/sendEmail.php?email=${email}`);
     });
 
     socket.on('disconnect', () => {
