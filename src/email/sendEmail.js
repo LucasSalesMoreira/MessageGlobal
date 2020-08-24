@@ -1,15 +1,15 @@
-module.exports = (email) => {
+//module.exports = 
+const f = (email) => {
     const nodemailer = require('nodemailer');
 
-    const myEmail = 'lucasdevsoftware@gmail.com';
+    const myEmail = 'messageglobal@bol.com.br';
     
     const transport = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
+        host: 'smtps.bol.com.br',
         port: 587,
-        secure: true,
         auth: {
             user: myEmail,
-            pass: process.env.EMAIL_PASS,
+            pass: 'mecatronico15*',
         },
         tls: {
             rejectUnauthorized: false
@@ -17,7 +17,7 @@ module.exports = (email) => {
     });
 
     var body = {
-        from: `Sales App <${myEmail}>`,
+        from: myEmail,
         to: [email],
         subject: 'Validação de email: 967921',
         html: '<h3>Seja bem vindo ao nosso app!</h3>'
@@ -30,3 +30,5 @@ module.exports = (email) => {
             console.log(`Email enviado com sucesso! -> ${info.response}`);
     });
 };
+
+f('lucassalesmoreira161@gmail.com');
