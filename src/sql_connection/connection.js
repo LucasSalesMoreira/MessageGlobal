@@ -1,13 +1,18 @@
 const connection = {
     //connect
     connectDataBase: function() {
-        const mysql = require('mysql'); 
+        const mysql = require('mysql');
+        const host_db = process.env.host_db;
+        const port_db = process.env.port_db;
+        const user_db = process.env.user_db;
+        const pass_db = process.env.pass_db;
+        const db = process.env.db;
         return mysql.createConnection({
-            host: 'mysql669.umbler.com', 
-            port: 41890, 
-            user: 'lucassales', 
-            password: 'lucasemikaio', 
-            database: 'bd_messageglobal'
+            host: host_db, 
+            port: port_db, 
+            user: user_db, 
+            password: pass_db,
+            database: db,
         });
     },
 
