@@ -33,10 +33,10 @@ io.on('connection', (socket) => {
         var name = userData.name;
         var password = userData.password;
         var email = userData.email;
+        
         //Enviar email de confirmação.
-        /*
         const sendEmail = require('./email/sendEmail.js');
-        sendEmail(email);*/
+        sendEmail(email);
     });
 
     socket.on('disconnect', () => {
