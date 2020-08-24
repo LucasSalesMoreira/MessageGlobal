@@ -4,6 +4,7 @@
   "description": "servidor do chat",
   "main": "src/server.js",
   "dependencies": {
+    "axios": "^0.20.0",
     "express": "^4.17.1",
     "mysql": "^2.18.1",
     "nodemailer": "^6.4.11",

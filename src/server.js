@@ -4,6 +4,8 @@ const app = express();
 //---------- CRIA AS ROTAS MIKAIO.
 app.use(express.static(__dirname + '/public'));
 
+app.get('/', (rec, res) => res.send('<h1>TESTANDO DEPLOY</h1>'));
+
 app.get('/sendemail', (rec, res) => {
     //host externo pra envio de email de autenticação.
     res.redirect(`https://lucassalestestes.000webhostapp.com/sendEmail.php?email=${email}`);
@@ -11,6 +13,8 @@ app.get('/sendemail', (rec, res) => {
 
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
+
+
 
 io.on('connection', (socket) => {
     console.log(`User ${socket.id} connected!`);
