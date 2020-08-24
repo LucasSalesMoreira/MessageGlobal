@@ -1,15 +1,15 @@
-//module.exports = 
-const f = (email) => {
+module.exports = (email) => {
     const nodemailer = require('nodemailer');
 
-    const myEmail = 'messageglobal@bol.com.br';
-    
+    const myEmail = 'lucas.sales@messageglobalapp.com';
+    const password = process.env.pass_email;
+
     const transport = nodemailer.createTransport({
-        host: 'smtps.bol.com.br',
+        host: 'smtp.umbler.com',
         port: 587,
         auth: {
             user: myEmail,
-            pass: 'mecatronico15*',
+            pass: password,
         },
         tls: {
             rejectUnauthorized: false
@@ -30,5 +30,3 @@ const f = (email) => {
             console.log(`Email enviado com sucesso! -> ${info.response}`);
     });
 };
-
-f('lucassalesmoreira161@gmail.com');
