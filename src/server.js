@@ -6,12 +6,6 @@ const axios = require('axios');
 //---------- CRIA AS ROTAS MIKAIO.
 app.use(express.static(__dirname + '/public'));
 
-app.get('/sendemail', (rec, res) => {
-    //host externo pra envio de email de autenticação.
-    var email = 'lucassalesmoreira161@gmail.com';
-    res.redirect(`https://lucassalestestes.000webhostapp.com/sendEmail.php?email=${email}`);
-});
-
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
@@ -33,10 +27,12 @@ io.on('connection', (socket) => {
         var name = userData.name;
         var password = userData.password;
         var email = userData.email;
-        
+
         //Enviar email de confirmação.
+        const generate = require('./email/codeGenerator.js');
+        var code = generate();
         const sendEmail = require('./email/sendEmail.js');
-        sendEmail(email);
+        sendEmail(email, code);
     });
 
     socket.on('disconnect', () => {
