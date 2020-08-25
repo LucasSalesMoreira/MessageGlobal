@@ -1,4 +1,4 @@
-module.exports = (email) => {
+module.exports = (email, code) => {
     const nodemailer = require('nodemailer');
 
     const myEmail = 'lucas.sales@messageglobalapp.com';
@@ -19,7 +19,7 @@ module.exports = (email) => {
     var body = {
         from: myEmail,
         to: [email],
-        subject: 'Validação de email: 967921',
+        subject: `Código para validação de email: ${code}`,
         html: '<h3>Seja bem vindo ao nosso app!</h3>'
     };
 
