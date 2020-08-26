@@ -10,7 +10,7 @@ const connection = {
         return mysql.createConnection({
             host: host_db, 
             port: port_db, 
-            user: user_db, 
+            user: user_db,
             password: pass_db,
             database: db,
         });
@@ -19,6 +19,7 @@ const connection = {
     //insert
     create: function(sql) {
         var conn = this.connectDataBase();
+        console.log(conn);/*
         if (conn) {
             conn.query(sql, (error, results, fields) => {
                 if (error) {
@@ -32,7 +33,7 @@ const connection = {
             });
         } else {
             console.log('>>>> Falha na conexão com o banco de dados!');
-        }
+        }*/
     },
 
     //select
