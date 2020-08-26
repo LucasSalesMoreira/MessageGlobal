@@ -23,8 +23,16 @@ const connection = {
             if (error) {
                 console.log(`Falha na conexão -> ${error}`);
             } else {
-                console.log('Conectado!');
-                console.log(conn);
+                conn.query(sql, (query_error, results, fields) => {
+                    if (query_error) {
+                        console.log('>>>> Falha ao executar a query: '+sql);
+                        console.log(error);
+                        conn.end();
+                    } else {
+                        console.log('>>>> Cadastro realizado!');
+                        conn.end();
+                    }
+                });
             }
         });
         /*
