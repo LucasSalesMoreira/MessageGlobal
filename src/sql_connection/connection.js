@@ -1,6 +1,6 @@
-const connection = {
+module.exports = {
     //connect
-    connectDataBase: function() {
+    initConnection: function() {
         const mysql = require('mysql');
         const host_db = process.env.host_db;
         const port_db = process.env.port_db;
@@ -18,7 +18,7 @@ const connection = {
 
     //insert
     create: function(sql) {
-        var conn = this.connectDataBase();
+        var conn = this.initConnection();
         conn.connect((error) => {
             if (error) {
                 console.log(`Falha na conexão -> ${error}`);
@@ -26,7 +26,7 @@ const connection = {
                 conn.query(sql, (query_error, results, fields) => {
                     if (query_error) {
                         console.log('>>>> Falha ao executar a query: '+sql);
-                        console.log(error);
+                        console.log(query_error);
                         conn.end();
                     } else {
                         console.log('>>>> Cadastro realizado!');
@@ -35,80 +35,69 @@ const connection = {
                 });
             }
         });
-        /*
-        if (conn) {
-            conn.query(sql, (error, results, fields) => {
-                if (error) {
-                    console.log('>>>> Falha ao executar a query: '+sql);
-                    console.log(error);
-                    conn.end();
-                } else {
-                    console.log('>>>> Cadastro realizado!');
-                    conn.end();
-                }
-            });
-        } else {
-            console.log('>>>> Falha na conexão com o banco de dados!');
-        }*/
     },
 
     //select
     searsh: function(sql) {
-        var conn = this.connectDataBase();
-        if (conn) {
-            conn.query(sql, (error, results, fields) => {
-                if (error) {
-                    console.log('>>>> Falha ao executar a query: '+sql);
-                    console.log(error);
-                    conn.end();
-                } else {
-                    console.log('>>>> Busca realizada!');
-                    console.log(results);
-                    conn.end();
-                }
-            });
-        } else {
-            console.log('>>>> Falha na conexão com o banco de dados!');
-        }
+        var conn = this.initConnection();
+        conn.connect((error) => {
+            if (error) {
+                console.log(`Falha na conexão -> ${error}`);
+            } else {
+                conn.query(sql, (query_error, results, fields) => {
+                    if (query_error) {
+                        console.log('>>>> Falha ao executar a query: '+sql);
+                        console.log(query_error);
+                        conn.end();
+                    } else {
+                        console.log('>>>> Busca realizada!');
+                        console.log(results);
+                        conn.end();
+                    }
+                });
+            }
+        });
     },
 
     //update
     update: function(sql) {
-        var conn = this.connectDataBase();
-        if (conn) {
-            conn.query(sql, (error, results, fields) => {
-                if (error) {
-                    console.log('>>>> Falha ao executar a query: '+sql);
-                    console.log(error);
-                    conn.end();
-                } else {
-                    console.log('>>>> Atualização realizada!');
-                    conn.end();
-                }
-            });
-        } else {
-            console.log('>>>> Falha na conexão com o banco de dados!');
-        }
+        var conn = this.initConnection();
+        conn.connect((error) => {
+            if (error) {
+                console.log(`Falha na conexão -> ${error}`);
+            } else {
+                conn.query(sql, (query_error, results, fields) => {
+                    if (query_error) {
+                        console.log('>>>> Falha ao executar a query: '+sql);
+                        console.log(query_error);
+                        conn.end();
+                    } else {
+                        console.log('>>>> Atualização realizada!');
+                        conn.end();
+                    }
+                });
+            }
+        });
     },
     
     //delete
     delete: function(sql) {
-        var conn =  this.connectDataBase();
-        if (conn) {
-            conn.query(sql, (error, results, fields) => {
-                if (error) {
-                    console.log('>>>> Falha ao executar a query: '+sql);
-                    console.log(error);
-                    conn.end();
-                } else {
-                    console.log('>>>> Exclusão realizada!');
-                    conn.end();
-                }
-            });
-        } else {
-            console.log('>>>> Falha na conexão com o banco de dados!');
-        }
+        var conn =  this.initConnection();
+        conn.connect((error) => {
+            if (error) {
+                console.log(`Falha na conexão -> ${error}`);
+            } else {
+                conn.query(sql, (query_error, results, fields) => {
+                    if (query_error) {
+                        console.log('>>>> Falha ao executar a query: '+sql);
+                        console.log(query_error);
+                        conn.end();
+                    } else {
+                        console.log('>>>> Exclusão realizada!');
+                        conn.end();
+                    }
+                });
+            }
+        });
     }
 };
-
-module.exports = connection;
