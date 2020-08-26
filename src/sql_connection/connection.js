@@ -19,7 +19,15 @@ const connection = {
     //insert
     create: function(sql) {
         var conn = this.connectDataBase();
-        console.log(conn);/*
+        conn.connect((error) => {
+            if (error) {
+                console.log(`Falha na conexão -> ${error}`);
+            } else {
+                console.log('Conectado!');
+                console.log(conn);
+            }
+        });
+        /*
         if (conn) {
             conn.query(sql, (error, results, fields) => {
                 if (error) {
