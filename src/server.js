@@ -29,8 +29,14 @@ io.on('connection', (socket) => {
         var email = userData.email;
 
         //Enviar email de confirmação.
+        
         const generate = require('./email/codeGenerator.js');
         var code = generate();
+
+        const connection = require('./sql_connection/connection.js');
+        const sql = `insert into authentication (code, email) values (${code}, '${email}')`; 
+        connection.create(sql);
+
         const sendEmail = require('./email/sendEmail.js');
         sendEmail(email, code);
     });
