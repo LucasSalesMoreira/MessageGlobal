@@ -51,7 +51,7 @@ module.exports = {
                         conn.end();
                     } else {
                         console.log('>>>> Busca realizada!');
-                        console.log(results);
+                        console.log(results[0].code);
                         conn.end();
                     }
                 });
