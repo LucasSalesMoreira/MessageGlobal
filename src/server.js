@@ -23,10 +23,11 @@ io.on('connection', (socket) => {
         console.log(`Dados de acesso -> nome: ${name} senha: ${password}`);
     });
 
-    socket.on('new_user', (userData) => {
+    socket.on('new_authentication', (userData) => {
         var name = userData.name;
         var password = userData.password;
         var email = userData.email;
+        var number = userData.number;
 
         //Enviar email de confirmação.
 
@@ -34,11 +35,24 @@ io.on('connection', (socket) => {
         var code = generate();
 
         const connection = require('./sql_connection/connection.js');
-        const sql = `insert into authentication (code, email) values (${code}, '${email}')`;
+        const sql = `insert into authentication (code, email, name, number) values (${code}, '${email}', '${name}', '${number}')`;
         connection.create(sql);
 
         const sendEmail = require('./email/sendEmail.js');
         sendEmail(email, code);
+    });
+
+    socket.on('authenticating', (authentication) => {
+        var code = authentication.code;
+        var email = authentication.email;
+        var name = authentication.name;
+        var number = authentication.number;
+        //Fazer busca no banco pelo code.
+        const connection = require('./sql_connection/connection.js');
+        var sql = `select * from authentication where code = ${code}`;
+        connection.searsh(sql);
+        //se bater com o email -> cadastrar user
+        //se n -> retornar erro de autenticação
     });
 
     socket.on('disconnect', () => {
