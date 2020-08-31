@@ -55,7 +55,7 @@ module.exports = {
                         setTimeout(() => {
                             return results[0];
                             conn.end();
-                        }, 1000);
+                        }, 3000);
                     }
                 });
             }
