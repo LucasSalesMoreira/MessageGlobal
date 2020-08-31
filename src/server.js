@@ -50,7 +50,8 @@ io.on('connection', (socket) => {
         //Fazer busca no banco pelo code.
         const connection = require('./sql_connection/connection.js');
         var sql = `select * from authentication where code = ${code}`;
-        connection.searsh(sql);
+        var object = connection.searsh(sql);
+        console.log(object.code);
         //se bater com o email -> cadastrar user
         //se n -> retornar erro de autenticação
     });
