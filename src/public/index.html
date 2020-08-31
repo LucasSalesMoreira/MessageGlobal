@@ -22,7 +22,7 @@
                 var name = document.getElementById('name').value;
                 var password = document.getElementById('password').value;
                 if (email !== '' && name !== '' && password !== '')
-                    socket.emit('authenticating', {email: email, name: name, password: password});
+                    socket.emit('authenticating', {code: '38885', email: email, name: name, password: password});
                     //socket.emit('new_user', {email: email, name: name, password: password});
                 else
                     alert('Preencha todos os dados!');
