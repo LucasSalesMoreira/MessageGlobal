@@ -52,7 +52,7 @@ io.on('connection', (socket) => {
         const connection = require('./sql_connection/connection.js');
         var sql = `select * from authentication where code = ${code}`;
         var object = connection.searsh(sql);
-        setTimeout(() => console.log(object.code), 500);
+        setTimeout(() => console.log(object.code), 1000);
         //se bater com o email -> cadastrar user
         //se n -> retornar erro de autenticação
     });
