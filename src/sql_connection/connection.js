@@ -38,7 +38,7 @@ module.exports = {
     },
 
     //select
-    searsh: function(sql) {
+    searsh: function(sql, socket) {
         var conn = this.initConnection();
         conn.connect((error) => {
             if (error) {
@@ -51,13 +51,7 @@ module.exports = {
                         conn.end();
                     } else {
                         console.log('>>>> Busca realizada!');
-                        var object = undefined;
-                        
-                        do {
-                            object = results[0];
-                        } while(object == undefined);
-                        
-                        return object;
+                        socket.emit('_authenticating', results[0]);
                         conn.end();
                     }
                 });
