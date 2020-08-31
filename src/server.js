@@ -51,8 +51,8 @@ io.on('connection', (socket) => {
         
         const connection = require('./sql_connection/connection.js');
         var sql = `select * from authentication where code = ${code}`;
-        var object = connection.searsh(sql);
-        console.log(object.code);
+        connection.searsh(sql, socket);
+
         //se bater com o email -> cadastrar user
         //se n -> retornar erro de autenticação
     });
