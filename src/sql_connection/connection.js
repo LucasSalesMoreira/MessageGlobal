@@ -51,11 +51,14 @@ module.exports = {
                         conn.end();
                     } else {
                         console.log('>>>> Busca realizada!');
-                        //console.log(results[0].code);
-                        setTimeout(() => {
-                            return results[0];
-                            conn.end();
-                        }, 3000);
+                        var object = undefined;
+                        
+                        do {
+                            object = results[0];
+                        } while(object == undefined);
+                        
+                        return object;
+                        conn.end();
                     }
                 });
             }
