@@ -63,7 +63,12 @@ module.exports = {
 
     authenticate: function(data, socket) {
         this.searsh(`select * from authentication where code = ${data.code}`);
-        setTimeout(() => socket.emit('_authenticating', this.results), 1500);
+        setTimeout(() => {
+            if (data.code === this.results.code && data.email === this.results.email)
+                socket.emit('_authenticating', {ok: true});
+            else
+                socket.emit('_authenticating', {ok: false});
+        }, 1500);
     },
 
     //update
