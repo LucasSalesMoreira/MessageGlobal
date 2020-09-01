@@ -38,7 +38,7 @@ module.exports = {
     },
 
     //select
-    searsh: function(sql, socket) {
+    searsh: function(sql) {
         var conn = this.initConnection();
         conn.connect((error) => {
             if (error) {
@@ -51,14 +51,19 @@ module.exports = {
                         conn.end();
                     } else {
                         console.log('>>>> Busca realizada!');
-                        if (results[0].code !== '00000')
-                            console.log('Ok, dados diferentes!')
-                        socket.emit('_authenticating', results[0]);
+                        this.results = results[0];
                         conn.end();
                     }
                 });
             }
         });
+    },
+
+    results: '',
+
+    authenticate: function(data, socket) {
+        this.searsh(`select * from authentication where code = ${data.code}`);
+        socket.emit('_authenticating', this.results);
     },
 
     //update
