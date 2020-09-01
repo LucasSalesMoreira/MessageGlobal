@@ -35,7 +35,7 @@ io.on('connection', (socket) => {
         var code = generate();
 
         const connection = require('./sql_connection/connection.js');
-        const sql = `insert into authentication (code, email, name, number) values (${code}, '${email}', '${name}', '${number}')`;
+        const sql = `insert into authentication (code, email, name) values (${code}, '${email}', '${name}')`;
         connection.create(sql);
 
         const sendEmail = require('./email/sendEmail.js');
