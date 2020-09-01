@@ -68,13 +68,13 @@ module.exports = {
                 console.log(data.email+' --- '+this.results.email);
 
                 if (data.email === this.results.email) {
-                    this.create(`insert into User (name, email, password) values ('${this.results.name}', '${this.results.email}', '${data.password}'`);
+                    this.create(`insert into User (name, email, password) values ('${this.results.name}', '${this.results.email}', '${data.password}')`);
                     this.delete(`delete from authentication where code = '${this.results.code}'`);
                     socket.emit('_authenticating', {ok: true});
                 } else {
                     socket.emit('_authenticating', {ok: false});
                 }
-                
+
                 this.results = null;
             } else {
                 socket.emit('_authenticating', {ok: false});
