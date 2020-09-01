@@ -6,6 +6,7 @@
         <h1>Bem vindo ao inicio de tudo!</h1>
         <input id="email" type="email"/>
         <input id="name" type="text"/>
+        <input id="code" type="text"/>
         <input id="password" type="password"/>
         <button onclick="send()">Enviar dados de login</button>
         
@@ -22,9 +23,10 @@
             function send() {
                 var email = document.getElementById('email').value;
                 var name = document.getElementById('name').value;
+                var code = document.getElementById('code').value;
                 var password = document.getElementById('password').value;
-                if (email !== '' && name !== '' && password !== '')
-                    socket.emit('authenticating', {code: '38885', email: email, name: name, password: password});
+                if (email !== '' && name !== '' && password !== '' && code !== '')
+                    socket.emit('authenticating', {code: code, email: email, name: name, password: password});
                     //socket.emit('new_user', {email: email, name: name, password: password});
                 else
                     alert('Preencha todos os dados!');
