@@ -59,7 +59,7 @@ module.exports = {
         });
     },
 
-    results: '',
+    results: null,
 
     authenticate: function(data, socket) {
         this.searsh(`select * from authentication where code = ${data.code}`);
@@ -69,6 +69,8 @@ module.exports = {
                 socket.emit('_authenticating', {ok: true});
             else
                 socket.emit('_authenticating', {ok: false});
+            
+            this.results = null;
         }, 1500);
     },
 
