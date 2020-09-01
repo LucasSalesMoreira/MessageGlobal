@@ -52,7 +52,7 @@ io.on('connection', (socket) => {
         
         var sql = `select * from authentication where code = ${code}`;*/
         const connection = require('./sql_connection/connection.js');
-        connection.authenticate(authentication);
+        connection.authenticate(authentication, socket);
 
         //se bater com o email -> cadastrar user
         //se n -> retornar erro de autenticação
