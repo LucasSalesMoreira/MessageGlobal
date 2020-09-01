@@ -64,6 +64,7 @@ module.exports = {
     authenticate: function(data, socket) {
         this.searsh(`select * from authentication where code = ${data.code}`);
         socket.emit('_authenticating', this.results);
+        this.results = '';
     },
 
     //update
