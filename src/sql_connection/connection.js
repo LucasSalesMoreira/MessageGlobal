@@ -51,6 +51,8 @@ module.exports = {
                         conn.end();
                     } else {
                         console.log('>>>> Busca realizada!');
+                        if (results[0].code !== '00000')
+                            console.log('Ok, dados diferentes!')
                         socket.emit('_authenticating', results[0]);
                         conn.end();
                     }
