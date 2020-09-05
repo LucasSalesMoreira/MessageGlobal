@@ -26,7 +26,7 @@
                 var code = document.getElementById('code').value;
                 var password = document.getElementById('password').value;
                 if (email !== '' && name !== '' && password !== '' && code !== '')
-                    socket.emit('authenticating', {code: code, email: email, name: name, password: password});
+                    socket.emit('login', {code: code, email: email, name: name, password: password});
                     //socket.emit('new_user', {email: email, name: name, password: password});
                 else
                     alert('Preencha todos os dados!');
