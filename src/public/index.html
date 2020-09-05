@@ -18,7 +18,7 @@
                 socket.emit('test1', 'Testando comunicação via WebSocket.');
             });
 
-            socket.on('_authenticating', (msg) => console.log(msg));
+            socket.on('login', (msg) => console.log(msg));
             
             function send() {
                 var email = document.getElementById('email').value;
