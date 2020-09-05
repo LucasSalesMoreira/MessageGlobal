@@ -8,7 +8,7 @@ module.exports = {
         const pass_db = process.env.pass_db;
         const db = process.env.db;
         return mysql.createConnection({
-            host: host_db, 
+            host: host_db,
             port: port_db, 
             user: user_db,
             password: pass_db,
@@ -60,6 +60,15 @@ module.exports = {
     },
 
     results: null,
+
+    login: function(data, socket) {
+        this.searsh(`select * from User where name = ${data.name} and password = ${data.password}`);
+        setTimeout(() => {
+            if (this.results.name === data.name && this.results.password === data.password) {
+                socket.emit('login', {ok: true});
+            }
+        }, 1500);
+    },
 
     authenticate: function(data, socket) {
         this.searsh(`select * from authentication where code = ${data.code}`);

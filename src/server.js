@@ -17,10 +17,8 @@ io.on('connection', (socket) => {
     });
 
     socket.on('login', (userData) => {
-        var name = userData.name;
-        var password = userData.password;
-
-        console.log(`Dados de acesso -> nome: ${name} senha: ${password}`);
+        const connection = require('./sql_connection/connection.js');
+        connection.login(userData, socket);
     });
 
     socket.on('new_authentication', (userData) => {
