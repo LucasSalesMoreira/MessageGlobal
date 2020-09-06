@@ -14,7 +14,7 @@ io.on('connection', (socket) => {
 
     socket.on('test1', (parameter) => {
         console.log(parameter);
-    });
+     });
 
     socket.on('login', (userData) => {
         const connection = require('./sql_connection/connection.js');
