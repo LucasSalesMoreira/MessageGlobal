@@ -1,0 +1,32 @@
+body {
+    width: 100vw;
+    padding: 0 1%;
+    background-color: #696969;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.Perguntas {  
+    font-weight: bolder;
+    letter-spacing: 3px;
+    font-size: 20px;
+}
+h1 {
+    font-size: 35;
+}
+p.Resposta {
+    text-align: justify;
+    font: lato; 
+    letter-spacing: 3px;
+    margin-left: 350px;
+    width: 400px;
+}
+#vermelho {
+    color: red;
+}
+#folha {
+    background-color: white;
+    width: 55%;
+    border-radius: 2px;
+    padding: 0 2.5%;
+}
