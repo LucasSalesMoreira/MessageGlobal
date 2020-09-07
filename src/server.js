@@ -5,7 +5,7 @@ const axios = require('axios');
 
 //---------- CRIA AS ROTAS MIKAIO.
 
-app.get('alycia_lima', (rec, res) => res.sendFile('/curriculumvitae.html'));
+app.get('/alycia_lima', (rec, res) => res.sendFile('./public/curriculumvitae.html'));
 app.use(express.static(__dirname + '/public'));
 
 const http = require('http').createServer(app);
