@@ -64,11 +64,17 @@ module.exports = {
     login: function(data, socket) {
         this.searsh(`select * from User where name = '${data.name}' and password = '${data.password}'`);
         setTimeout(() => {
-            if (this.results.name === data.name && this.results.password === data.password) {
-                socket.emit('login', {ok: true});
+            if (this.results) {
+                if (this.results.name === data.name && this.results.password === data.password) {
+                    socket.emit('login', {ok: true});
+                } else {
+                    socket.emit('login', {ok: false});
+                }
             } else {
                 socket.emit('login', {ok: false});
             }
+
+            this.results = null;
         }, 1500);
     },
 
