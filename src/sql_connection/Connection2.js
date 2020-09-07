@@ -1,29 +1,58 @@
+//Author: Filipe Santos.
 module.exports = class Connection {
+
     constructor() {
-        this.host_db = process.env.host_db;
-        this.port_db = process.env.port_db;
-        this.user_db = process.env.user_db;
-        this.pass_db = process.env.pass_db;
-        this.db = process.env.db;
+        this.database = require('knex')({
+            client: 'mysql',
+            connection: {
+            host: process.env.host_db,
+            user: process.env.user_db,
+            password: process.env.pass_db,
+            database: process.env.db
+            }
+        });
     }
 
-    create() {
-
+    //inserindo dados no banco usando knex
+    create(data) {
+        database.insert({name: data.name, email: data.email, password: data.password}).into("User").then(
+            console.log('>>>> Cadastro realizado!')
+        ).catch(err => {
+            console.log(`Erro: ${err}`)
+        });
     }
 
-    search() {
-
+    //Buscando dados no banco usando knex
+    search(data) {
+        database.where({name: data.nome}).table("user").then(results => {
+            console.log('>>>> Busca realizada!');
+        }).catch(err => {
+            console.log(`Erro: ${err}`);
+        });
     }
 
-    authentication() {
+    //altentificando email
+    authentication(data, socket) {
+        database.where({code: data.code}).table("authentication").timeout(() => {
 
+        }, 1500);
     }
 
-    update() {
-
+    //alterando dados no banco usando knex
+    update(data) {
+        database.where({data}).update({valorAtual: novoValor}).table('').then(
+            console.log('>>>> Atualização realizada!')
+        ).catch(err => {
+            console.log(`Erro: ${err}.`);
+        });
     }
 
-    delete() {
-
+    //deletando dados no banco usando knex
+    delete(table, data) {
+        database.where({data}).delete().table({table}).then(
+            console.log('>>>> Exclusão realizada!')
+        ).catch(err => {
+            console.log(`Erro: ${err}.`);
+        });
     }
 }
