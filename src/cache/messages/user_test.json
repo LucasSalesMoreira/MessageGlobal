@@ -1,0 +1,9 @@
+{
+    "name": "user_test",
+    "inbox": [{"contact": "mikaio", "text": "Oi user_test, fazendo oq da vida?", "date": "06/09/2020 - 23:33"},
+            {"contact": "Lucas", "text": "Oi user_test, de boa?", "date": "06/09/2020 - 23:33"},
+            {"contact": "Aly", "text": "Oi user_test, suave na nave?", "date": "06/09/2020 - 23:33"}],
+    "sendbox": [{"contact": "mikaio", "text": "Estou em mikaio", "date": "06/09/2020 - 23:33"},
+        {"contact": "Lucas", "text": "Estou bem lucas", "date": "06/09/2020 - 23:33"},
+        {"contact": "Aly", "text": "Estou bem aly", "date": "06/09/2020 - 23:33"}]
+}
