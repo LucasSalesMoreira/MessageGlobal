@@ -1,5 +1,4 @@
-//module.exports = 
-class Manager {
+module.exports = class Manager {
     
     constructor() {
         this.file = require('fs');
@@ -54,8 +53,9 @@ class Manager {
         }, 100);
     }
 }
-
+/*
 const m = new Manager();
 //m.createMessageFile('user_test2');
 //m.readMessageFile('user_test2');
 m.addMessage({name: 'user_test2', type: 'out', contact: 'Eduardo', text: 'blablablablabla', date: '08/09/2020 - 16:11'});
+*/
