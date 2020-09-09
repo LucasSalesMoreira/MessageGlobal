@@ -23,6 +23,8 @@ io.on('connection', (socket) => {
         connection.login(userData, socket);
     });
 
+    //msg event
+
     socket.on('new_authentication', (userData) => {
         var name = userData.name;
         var password = userData.password;
