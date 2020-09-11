@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 
 const axios = require('axios');
+const path = require('path');
 
 //---------- CRIA AS ROTAS MIKAIO.
 
@@ -13,10 +14,12 @@ const io = require('socket.io')(http);
 
 io.on('connection', (socket) => {
     console.log(`User ${socket.id} connected!`);
+    socket.emit('welcome', {connected: true});
 
-    socket.on('test1', (parameter) => {
-        console.log(parameter);
-     });
+    socket.on('loadMessages', (email) => {
+        const Manager = require(path.resolve('src/fileManager/Manager.js'));
+        new Manager().loadMessage(email, socket);
+    });
 
     socket.on('login', (userData) => {
         const connection = require('./sql_connection/connection.js');
