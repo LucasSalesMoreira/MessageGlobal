@@ -21,6 +21,10 @@ io.on('connection', (socket) => {
         new Manager().loadMessages(email, socket);
     });
 
+    socket.on('msg', () => {
+        
+    });
+
     socket.on('login', (userData) => {
         const connection = require('./sql_connection/connection.js');
         connection.login(userData, socket);
