@@ -18,7 +18,7 @@ io.on('connection', (socket) => {
 
     socket.on('loadMessages', (email) => {
         const Manager = require(path.resolve('src/fileManager/Manager.js'));
-        new Manager().loadMessage(email, socket);
+        new Manager().loadMessages(email, socket);
     });
 
     socket.on('login', (userData) => {
