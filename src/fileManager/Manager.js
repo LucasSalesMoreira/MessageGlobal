@@ -7,7 +7,7 @@ module.exports = class Manager {
 
     createMessageFile(fileName) {
         const messageObject = {
-            name: fileName,
+            email: fileName,
             inbox: [{}],
             sendbox: [{}]
         };
@@ -26,7 +26,7 @@ module.exports = class Manager {
     }
 
     addMessage(msgObject) {
-        this.readMessageFile(msgObject.name);
+        this.readMessageFile(msgObject.email);
         
         setTimeout(() => {
             console.log(this.data);
@@ -44,7 +44,7 @@ module.exports = class Manager {
                 dataObject.sendbox.push({contact: contact, text: text, date: date});
             }
 
-            var url = `./src/cache/messages/${msgObject.name}.json`;
+            var url = `./src/cache/messages/${msgObject.email}.json`;
             this.file.writeFile(url, JSON.stringify(dataObject), 'utf8', (error) => {
                 error ? console.log(`Falha: ${error}`) : console.log('Nava mensagem salva no cache!');
             });
@@ -52,10 +52,19 @@ module.exports = class Manager {
             this.data = null;
         }, 100);
     }
+
+    loadMessages(email, socket) {
+        this.readMessageFile(email);
+        setTimeout(() => {
+            console.log(this.data);
+            socket.emit('loadMessages', this.data);
+            this.data = null;
+        }, 100);
+    }
 }
-/*
-const m = new Manager();
-//m.createMessageFile('user_test2');
+
+//const m = new Manager();
+//m.createMessageFile('user_test3@gmail.com');
+
 //m.readMessageFile('user_test2');
-m.addMessage({name: 'user_test2', type: 'out', contact: 'Eduardo', text: 'blablablablabla', date: '08/09/2020 - 16:11'});
-*/
+//m.addMessage({email: 'user_test3@gmail.com', type: 'out', contact: 'Eduardo', text: 'blablablablabla', date: '08/09/2020 - 16:11'});
