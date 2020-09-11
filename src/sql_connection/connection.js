@@ -62,10 +62,10 @@ module.exports = {
     results: null,
 
     login: function(data, socket) {
-        this.searsh(`select * from User where name = '${data.name}' and password = '${data.password}'`);
+        this.searsh(`select * from User where email = '${data.email}' and password = '${data.password}'`);
         setTimeout(() => {
             if (this.results) {
-                if (this.results.name === data.name && this.results.password === data.password) {
+                if (this.results.email === data.email && this.results.password === data.password) {
                     socket.emit('login', {ok: true});
                 } else {
                     socket.emit('login', {ok: false});
@@ -89,7 +89,7 @@ module.exports = {
                     this.delete(`delete from authentication where code = '${this.results.code}'`);
                     const path = require('path');
                     const Manager = require(path.resolve('src/fileManager/Manager.js'));
-                    new Manager().createMessageFile(this.results.name);
+                    new Manager().createMessageFile(this.results.email);
                     socket.emit('_authenticating', {ok: true});
                 } else {
                     socket.emit('_authenticating', {ok: false});
