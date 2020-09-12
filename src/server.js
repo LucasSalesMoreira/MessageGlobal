@@ -21,16 +21,18 @@ io.on('connection', (socket) => {
         new Manager().loadMessages(email, socket);
     });
 
-    socket.on('msg', () => {
-        
+    socket.on('msg', (msgObject) => {
+        const Manager = require(path.resolve('src/fileManager/Manager.js'));
+        const manager = new Manager();
+        manager.addMessage(msgObject);
+
+        //Continuar codigo de envio de mensagens...
     });
 
     socket.on('login', (userData) => {
         const connection = require('./sql_connection/connection.js');
         connection.login(userData, socket);
     });
-
-    //msg event
 
     socket.on('new_authentication', (userData) => {
         var name = userData.name;
@@ -52,19 +54,8 @@ io.on('connection', (socket) => {
     });
 
     socket.on('authenticating', (authentication) => {
-        /*
-        var code = authentication.code;
-        var email = authentication.email;
-        var name = authentication.name;
-        var number = authentication.number;
-        //Fazer busca no banco pelo code.
-        
-        var sql = `select * from authentication where code = ${code}`;*/
         const connection = require('./sql_connection/connection.js');
         connection.authenticate(authentication, socket);
-
-        //se bater com o email -> cadastrar user
-        //se n -> retornar erro de autenticação
     });
 
     socket.on('disconnect', () => {
