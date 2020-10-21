@@ -7,17 +7,18 @@ const path = require('path');
 //---------- CRIA AS ROTAS MIKAIO.
 
 app.use(express.static(__dirname + '/public'));
-app.get('/alycia_lima', (rec, res) => res.sendFile(__dirname + '/public/curriulumvitae.html'));
 
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
 io.on('connection', (socket) => {
+
     console.log(`User ${socket.id} connected!`);
     socket.emit('welcome', {connected: true});
 
     socket.on('loadMessages', (email) => {
-        const Manager = require(path.resolve('src/fileManager/Manager.js'));
+        //const Manager = require(path.resolve('src/fileManager/Manager.js'));
+        const Manager = require('./fileManager/Manager.js');
         new Manager().loadMessages(email, socket);
     });
 
@@ -64,5 +65,5 @@ io.on('connection', (socket) => {
 
 });
 
-http.listen(process.env.PORT || 3000, () => console.log('Servidor rodando!!!'));
-//http.listen(process.env.PORT || 3000, '192.168.1.66', () => console.log('Servidor rodando!!!'));
+//http.listen(process.env.PORT || 3000, () => console.log('Servidor rodando!!!'));
+http.listen(process.env.PORT || 3000, '192.168.1.66', () => console.log('Servidor rodando!!!'));
