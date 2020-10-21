@@ -65,5 +65,5 @@ io.on('connection', (socket) => {
 
 });
 
-//http.listen(process.env.PORT || 3000, () => console.log('Servidor rodando!!!'));
-http.listen(process.env.PORT || 3000, '192.168.1.66', () => console.log('Servidor rodando!!!'));
+http.listen(process.env.PORT || 3000, () => console.log('Servidor rodando!!!'));
+//http.listen(process.env.PORT || 3000, '192.168.1.66', () => console.log('Servidor rodando!!!'));
