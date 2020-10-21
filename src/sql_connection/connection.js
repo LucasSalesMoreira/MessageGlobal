@@ -51,6 +51,7 @@ module.exports = {
                         conn.end();
                     } else {
                         console.log('>>>> Busca realizada!');
+                        this.resultArray = results;
                         this.results = results[0];
                         conn.end();
                     }
@@ -60,6 +61,8 @@ module.exports = {
     },
 
     results: null,
+
+    resultsArray: [],
 
     //update
     update: function(sql) {
@@ -116,7 +119,7 @@ module.exports = {
                 socket.emit('login', {ok: false});
             }
 
-            this.results = null;
+            this.clearResults();
         }, 1500);
     },
 
@@ -137,7 +140,7 @@ module.exports = {
                     socket.emit('_authenticating', {ok: false});
                 }
 
-                this.results = null;
+                this.clearResults();
             } else {
                 socket.emit('_authenticating', {ok: false});
             }
@@ -147,7 +150,13 @@ module.exports = {
     loadContacts: function(email, socket) {
         this.searsh(`select email_contact from contacts where email_user = '${email}'`);
         setTimeout(() => {
-            console.log(this.results);    
+            console.log(this.resultsArray);
+            this.clearResults();    
         }, 1500);
+    },
+
+    clearResults: function() {
+        this.results = null;
+        this.resultsArray = [];
     }
 };
