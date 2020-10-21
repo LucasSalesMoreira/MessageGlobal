@@ -22,6 +22,11 @@ io.on('connection', (socket) => {
         new Manager().loadMessages(email, socket);
     });
 
+    socket.on('loadContacts', (email) => {
+        const connection = require('./sql_connection/connection.js');
+        connection.loadContacts(email, socket);
+    });
+
     socket.on('msg', (msgObject) => {
         const Manager = require(path.resolve('src/fileManager/Manager.js'));
         const manager = new Manager();

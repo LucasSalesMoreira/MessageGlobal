@@ -61,6 +61,48 @@ module.exports = {
 
     results: null,
 
+    //update
+    update: function(sql) {
+        var conn = this.initConnection();
+        conn.connect((error) => {
+            if (error) {
+                console.log(`Falha na conexão -> ${error}`);
+            } else {
+                conn.query(sql, (query_error, results, fields) => {
+                    if (query_error) {
+                        console.log('>>>> Falha ao executar a query: '+sql);
+                        console.log(query_error);
+                        conn.end();
+                    } else {
+                        console.log('>>>> Atualização realizada!');
+                        conn.end();
+                    }
+                });
+            }
+        });
+    },
+    
+    //delete
+    delete: function(sql) {
+        var conn =  this.initConnection();
+        conn.connect((error) => {
+            if (error) {
+                console.log(`Falha na conexão -> ${error}`);
+            } else {
+                conn.query(sql, (query_error, results, fields) => {
+                    if (query_error) {
+                        console.log('>>>> Falha ao executar a query: '+sql);
+                        console.log(query_error);
+                        conn.end();
+                    } else {
+                        console.log('>>>> Exclusão realizada!');
+                        conn.end();
+                    }
+                });
+            }
+        });
+    },
+
     login: function(data, socket) {
         this.searsh(`select * from User where email = '${data.email}' and password = '${data.password}'`);
         setTimeout(() => {
@@ -102,45 +144,10 @@ module.exports = {
         }, 1500);
     },
 
-    //update
-    update: function(sql) {
-        var conn = this.initConnection();
-        conn.connect((error) => {
-            if (error) {
-                console.log(`Falha na conexão -> ${error}`);
-            } else {
-                conn.query(sql, (query_error, results, fields) => {
-                    if (query_error) {
-                        console.log('>>>> Falha ao executar a query: '+sql);
-                        console.log(query_error);
-                        conn.end();
-                    } else {
-                        console.log('>>>> Atualização realizada!');
-                        conn.end();
-                    }
-                });
-            }
-        });
-    },
-    
-    //delete
-    delete: function(sql) {
-        var conn =  this.initConnection();
-        conn.connect((error) => {
-            if (error) {
-                console.log(`Falha na conexão -> ${error}`);
-            } else {
-                conn.query(sql, (query_error, results, fields) => {
-                    if (query_error) {
-                        console.log('>>>> Falha ao executar a query: '+sql);
-                        console.log(query_error);
-                        conn.end();
-                    } else {
-                        console.log('>>>> Exclusão realizada!');
-                        conn.end();
-                    }
-                });
-            }
-        });
+    loadContacts: function(email, socket) {
+        this.searsh(`select email_contact from contacts where email_user = '${email}'`);
+        setTimeout(() => {
+            console.log(this.results);    
+        }, 1500);
     }
 };
