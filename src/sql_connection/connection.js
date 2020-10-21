@@ -51,7 +51,7 @@ module.exports = {
                         conn.end();
                     } else {
                         console.log('>>>> Busca realizada!');
-                        this.resultArray = results;
+                        this.resultsArray = results;
                         this.results = results[0];
                         conn.end();
                     }
