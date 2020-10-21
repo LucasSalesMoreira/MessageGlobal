@@ -11,14 +11,14 @@ module.exports = class Manager {
             inbox: [{}],
             sendbox: [{}]
         };
-        var url = `./src/cache/messages/${fileName}.json`;
+        var url = `./MessageGlobal/src/cache/messages/${fileName}.json`;
         this.file.writeFile(url, JSON.stringify(messageObject), 'utf8', (error) => {
             error ? console.log(`Falha: ${error}`) : console.log('Arquivo de mensagens criado com sucesso!');
         });
     }
 
     readMessageFile(fileName) {
-        var url = `./MessageGlobal/src/cache/messages/${fileName}.json`;
+        var url = `${__dirname}/src/cache/messages/${fileName}.json`;
 
         this.file.readFile(url, 'utf8', (error, data) => {
             error ? console.log(`Falha: ${error}`) : this.data = data;
@@ -44,7 +44,7 @@ module.exports = class Manager {
                 dataObject.sendbox.push({contact: contact, text: text, date: date});
             }
 
-            var url = `./src/cache/messages/${msgObject.email}.json`;
+            var url = `./MessageGlobal/src/cache/messages/${msgObject.email}.json`;
             this.file.writeFile(url, JSON.stringify(dataObject), 'utf8', (error) => {
                 error ? console.log(`Falha: ${error}`) : console.log('Nava mensagem salva no cache!');
             });
