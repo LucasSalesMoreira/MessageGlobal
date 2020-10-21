@@ -151,6 +151,12 @@ module.exports = {
         this.searsh(`select email_contact from contacts where email_user = '${email}'`);
         setTimeout(() => {
             console.log(this.resultsArray);
+            var r = [];
+            for (i = 0; i < this.resultsArray.length; i++) {
+                r.push(this.resultsArray[i]);
+            }
+            console.log(r);
+            socket.emit('loadContacts', r);
             this.clearResults();    
         }, 1500);
     },
