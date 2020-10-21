@@ -18,7 +18,7 @@ module.exports = class Manager {
     }
 
     readMessageFile(fileName) {
-        var url = `./src/cache/messages/${fileName}.json`;
+        var url = `./MessageGlobal/src/cache/messages/${fileName}.json`;
 
         this.file.readFile(url, 'utf8', (error, data) => {
             error ? console.log(`Falha: ${error}`) : this.data = data;
