@@ -149,7 +149,7 @@ module.exports = {
 
     loadContacts: function(email, socket) {
         // new sql -> select c.email_contact, u.name from contacts c join User u on u.email = c.email_contact where c.email_user = "lucas@gmail.com";
-        this.searsh(`select c.email_contact, u.name from contacts c join User u on u.email = c.email_contact where c.email_user = ${email}`);
+        this.searsh(`select c.email_contact, u.name from contacts c join User u on u.email = c.email_contact where c.email_user = '${email}'`);
         setTimeout(() => {
             console.log(this.resultsArray);
             var r = [];
