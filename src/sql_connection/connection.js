@@ -111,7 +111,7 @@ module.exports = {
         setTimeout(() => {
             if (this.results) {
                 if (this.results.email === data.email && this.results.password === data.password) {
-                    socket.emit('login', {ok: true});
+                    socket.emit('login', {ok: true, name: this.results.name});
                 } else {
                     socket.emit('login', {ok: false});
                 }
