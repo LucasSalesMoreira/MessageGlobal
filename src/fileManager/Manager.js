@@ -33,15 +33,16 @@ module.exports = class Manager {
 
             var dataObject = JSON.parse(this.data);
 
+            var emailContact = msgObject.emailContact;
             var contact = msgObject.contact;
             var text = msgObject.text;
             var date = msgObject.date;
             
             if (msgObject.type === 'in') {
-                dataObject.inbox.push({contact: contact, text: text, date: date});
+                dataObject.inbox.push({emailContact: emailContact, contact: contact, text: text, date: date});
             }
             else if (msgObject.type === 'out') {
-                dataObject.sendbox.push({contact: contact, text: text, date: date});
+                dataObject.sendbox.push({emailContact: emailContact, contact: contact, text: text, date: date});
             }
 
             var url = `./MessageGlobal/src/cache/messages/${msgObject.email}.json`;
