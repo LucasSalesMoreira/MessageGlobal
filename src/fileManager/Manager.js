@@ -33,7 +33,7 @@ module.exports = class Manager {
 
             var dataObject = JSON.parse(this.data);
 
-            var emailContact = msgObject.emailContact;
+            var emailContact = msgObject.emailContact
             var contact = msgObject.contact;
             var text = msgObject.text;
             var date = msgObject.date;
@@ -51,7 +51,7 @@ module.exports = class Manager {
             });
 
             this.data = null;
-        }, 100);
+        }, 500);
     }
 
     loadMessages(email, socket) {
