@@ -29,7 +29,8 @@ io.on('connection', (socket) => {
 
     socket.on('msg', (msgObject) => {
         console.log(`New message: ${msgObject}`);
-        const Manager = require(path.resolve('src/fileManager/Manager.js'));
+        //const Manager = require(path.resolve('src/fileManager/Manager.js'));
+        const Manager = require('./fileManager/Manager.js');
         const manager = new Manager();
         manager.addMessage(msgObject);
 
