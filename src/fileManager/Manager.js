@@ -1,71 +1,82 @@
 module.exports = class Manager {
-    
+
     constructor() {
-        this.file = require('fs');
-        this.data = null;
+        this.promisify = require('util').promisify;
+        this.readFile = this.promisify(require('fs').readFile);
+        this.writeFile = this.promisify(require('fs').writeFile);
     }
 
-    createMessageFile(fileName) {
+    async createMessageFile(fileName) {
         const messageObject = {
             email: fileName,
             inbox: [{}],
             sendbox: [{}]
         };
-        var url = `./MessageGlobal/src/cache/messages/${fileName}.json`;
-        this.file.writeFile(url, JSON.stringify(messageObject), 'utf8', (error) => {
-            error ? console.log(`Falha: ${error}`) : console.log('Arquivo de mensagens criado com sucesso!');
-        });
+        //var url = `./MessageGlobal/src/cache/messages/${fileName}.json`;
+        var url = `./src/cache/messages/${fileName}.json`;
+        try {
+            await this.writeFile(url, JSON.stringify(messageObject), 'utf8');
+            console.log('Arquivo criado!');
+        } catch (error) {
+            console.log(`Error: ${error}`);
+        }
     }
 
-    readMessageFile(fileName) {
-        var url = `./MessageGlobal/src/cache/messages/${fileName}.json`;
-
-        this.file.readFile(url, 'utf8', (error, data) => {
-            error ? console.log(`Falha: ${error}`) : this.data = data;
-        });
+    async readMessageFile(fileName) {
+        //var url = `./MessageGlobal/src/cache/messages/${fileName}.json`;
+        var url = `./src/cache/messages/${fileName}.json`;
+        try {
+            return await this.readFile(url, 'utf8');
+        } catch (error) {
+            console.log(`Error: ${error}`);
+        }
     }
 
-    addMessage(msgObject) {
-        this.readMessageFile(msgObject.email);
-        
-        setTimeout(() => {
-            console.log(this.data);
+    async addMessage(msgObject) {
+        var data = await this.readMessageFile(msgObject.email);
+        console.log(data);
 
-            var dataObject = JSON.parse(this.data);
+        var dataObject = JSON.parse(data);
 
-            var emailContact = msgObject.emailContact
-            var contact = msgObject.contact;
-            var text = msgObject.text;
-            var date = msgObject.date;
-            
-            if (msgObject.type === 'in') {
-                dataObject.inbox.push({emailContact: emailContact, contact: contact, text: text, date: date});
-            }
-            else if (msgObject.type === 'out') {
-                dataObject.sendbox.push({emailContact: emailContact, contact: contact, text: text, date: date});
-            }
+        var emailContact = msgObject.emailContact
+        var contact = msgObject.contact;
+        var text = msgObject.text;
+        var date = msgObject.date;
 
-            var url = `./MessageGlobal/src/cache/messages/${msgObject.email}.json`;
-            this.file.writeFile(url, JSON.stringify(dataObject), 'utf8', (error) => {
-                error ? console.log(`Falha: ${error}`) : console.log('Nava mensagem salva no cache!');
-            });
+        if (msgObject.type === 'in') {
+            dataObject.inbox.push({ emailContact: emailContact, contact: contact, text: text, date: date });
+        }
+        else if (msgObject.type === 'out') {
+            dataObject.sendbox.push({ emailContact: emailContact, contact: contact, text: text, date: date });
+        }
 
-            this.data = null;
-        }, 100);
+        //var url = `./MessageGlobal/src/cache/messages/${msgObject.email}.json`;
+        var url = `./src/cache/messages/${msgObject.email}.json`;
+        try {
+            await this.writeFile(url, JSON.stringify(dataObject), 'utf8');
+            console.log('Nova mensagem salva com sucesso!');
+        } catch (error) {
+            console.log(`Error: ${error}`);
+        }
     }
 
-    loadMessages(email, socket) {
-        this.readMessageFile(email);
-        setTimeout(() => {
-            console.log(this.data);
-            socket.emit('loadMessages', this.data);
-            this.data = null;
-        }, 100);
+    async loadMessages(email, socket) {
+        var data = await this.readMessageFile(email);
+        console.log(JSON.parse(data));
+        socket.emit('loadMessages', this.data);
     }
+
+    async test() {
+        await this.createMessageFile('meu_pau@gmail.com');
+        await this.addMessage({email: 'meu_pau@gmail.com', type: 'in', emailContact: 'josiana@gmail.com', contact: 'Josiana', text: 'meu pau de avental fazendo bacanal', date: '08/09/2020 - 16:11'});
+        console.log('Fim da execução!');
+    }
+
 }
 
 //const m = new Manager();
+//m.test();
 //m.createMessageFile('user_test3@gmail.com');
-
 //m.readMessageFile('user_test2');
-//m.addMessage({email: 'user_test3@gmail.com', type: 'out', contact: 'Eduardo', text: 'blablablablabla', date: '08/09/2020 - 16:11'});
+//m.addMessage({email: 'user_test3@gmail.com', type: 'in', emailContact: 'josiana@gmail.com', contact: 'Josiana', text: 'meu pau de avental fazendo bacanal', date: '08/09/2020 - 16:11'});
+//console.log('fim do programa');
