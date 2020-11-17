@@ -51,7 +51,7 @@ module.exports = class Manager {
             });
 
             this.data = null;
-        }, 500);
+        }, 100);
     }
 
     loadMessages(email, socket) {
