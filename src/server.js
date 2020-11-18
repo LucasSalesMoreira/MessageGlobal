@@ -1,10 +1,8 @@
 const express = require('express');
 const app = express();
-
-const axios = require('axios');
 const path = require('path');
-
-//---------- CRIA AS ROTAS MIKAIO.
+//const Manager = require(path.resolve('src/fileManager/Manager.js'));
+const Manager = require('./fileManager/Manager.js');
 
 app.use(express.static(__dirname + '/public'));
 
@@ -16,10 +14,9 @@ io.on('connection', (socket) => {
     console.log(`User ${socket.id} connected!`);
     socket.emit('welcome', {connected: true});
 
-    socket.on('loadMessages', (email) => {
-        //const Manager = require(path.resolve('src/fileManager/Manager.js'));
-        const Manager = require('./fileManager/Manager.js');
-        new Manager().loadMessages(email, socket);
+    socket.on('loadMessages', async (email) => {
+        var data = await new Manager().loadMessages(email);
+        socket.emit('loadMessages', data);
     });
 
     socket.on('loadContacts', (email) => {
@@ -27,12 +24,10 @@ io.on('connection', (socket) => {
         connection.loadContacts(email, socket);
     });
 
-    socket.on('msg', (msgObject) => {
+    socket.on('msg', async (msgObject) => {
         console.log(`New message: ${msgObject}`);
-        //const Manager = require(path.resolve('src/fileManager/Manager.js'));
-        const Manager = require('./fileManager/Manager.js');
         const manager = new Manager();
-        manager.addMessage(msgObject);
+        await manager.addMessage(msgObject);
 
         //Continuar codigo de envio de mensagens...
     });

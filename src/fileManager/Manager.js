@@ -60,18 +60,11 @@ module.exports = class Manager {
         }
     }
 
-    async loadMessages(email, socket) {
+    async loadMessages(email) {
         var data = await this.readMessageFile(email);
         console.log(JSON.parse(data));
-        socket.emit('loadMessages', this.data);
+        return data;
     }
-
-    async test() {
-        await this.createMessageFile('meu_pau@gmail.com');
-        await this.addMessage({email: 'meu_pau@gmail.com', type: 'in', emailContact: 'josiana@gmail.com', contact: 'Josiana', text: 'meu pau de avental fazendo bacanal', date: '08/09/2020 - 16:11'});
-        console.log('Fim da execução!');
-    }
-
 }
 
 //const m = new Manager();
