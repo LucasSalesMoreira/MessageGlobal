@@ -19,9 +19,10 @@ io.on('connection', (socket) => {
         socket.emit('loadMessages', data);
     });
 
-    socket.on('loadContacts', (email) => {
-        const connection = require('./sql_connection/connection.js');
-        connection.loadContacts(email, socket);
+    socket.on('loadContacts', async (email) => {
+        const ManagerDB = require('./sql_connection/ManagerDB.js');
+        var contacts = await new ManagerDB().loadContacts(email);
+        socket.emit('loadContacts', contacts);
     });
 
     socket.on('msg', async (msgObject) => {
@@ -32,9 +33,12 @@ io.on('connection', (socket) => {
         //Continuar codigo de envio de mensagens...
     });
 
-    socket.on('login', (userData) => {
-        const connection = require('./sql_connection/connection.js');
-        connection.login(userData, socket);
+    socket.on('login', async (userData) => {
+        /*const connection = require('./sql_connection/connection.js');
+        connection.login(userData, socket);*/
+        const ManagerDB = require('./sql_connection/ManagerDB.js');
+        var r = await new ManagerDB().login(userData);
+        socket.emit('login', r);
     });
 
     socket.on('new_authentication', (userData) => {
@@ -48,7 +52,7 @@ io.on('connection', (socket) => {
         const generate = require('./email/codeGenerator.js');
         var code = generate();
 
-        const connection = require('./sql_connection/connection.js');
+        const connection = require('./sql_connection/ManagerDB.js');
         const sql = `insert into authentication (code, email, name) values (${code}, '${email}', '${name}')`;
         connection.create(sql);
 
@@ -56,9 +60,10 @@ io.on('connection', (socket) => {
         sendEmail(email, code);
     });
 
-    socket.on('authenticating', (authentication) => {
-        const connection = require('./sql_connection/connection.js');
-        connection.authenticate(authentication, socket);
+    socket.on('authenticating', async (authentication) => {
+        const ManagerDB = require('./sql_connection/ManagerDB.js');
+        var r = await new ManagerDB().authenticate(authentication);
+        socket.emit('_authenticating', r);
     });
 
     socket.on('disconnect', () => {
