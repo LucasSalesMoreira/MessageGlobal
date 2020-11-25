@@ -15,13 +15,13 @@ io.on('connection', (socket) => {
     socket.emit('welcome', {connected: true});
 
     socket.on('loadMessages', async (email) => {
-        var data = await new Manager().loadMessages(email);
+        const data = await new Manager().loadMessages(email);
         socket.emit('loadMessages', data);
     });
 
     socket.on('loadContacts', async (email) => {
         const ManagerDB = require('./sql_connection/ManagerDB.js');
-        var contacts = await new ManagerDB().loadContacts(email);
+        const contacts = await new ManagerDB().loadContacts(email);
         socket.emit('loadContacts', contacts);
     });
 
@@ -34,35 +34,21 @@ io.on('connection', (socket) => {
     });
 
     socket.on('login', async (userData) => {
-        /*const connection = require('./sql_connection/connection.js');
-        connection.login(userData, socket);*/
         const ManagerDB = require('./sql_connection/ManagerDB.js');
-        var r = await new ManagerDB().login(userData);
+        const r = await new ManagerDB().login(userData);
         socket.emit('login', r);
     });
 
-    socket.on('new_authentication', (userData) => {
-        var name = userData.name;
-        var password = userData.password;
-        var email = userData.email;
-        var number = userData.number;
-
+    socket.on('new_authentication', async (userData) => {
         //Enviar email de confirmação.
-
-        const generate = require('./email/codeGenerator.js');
-        var code = generate();
-
-        const connection = require('./sql_connection/ManagerDB.js');
-        const sql = `insert into authentication (code, email, name) values (${code}, '${email}', '${name}')`;
-        connection.create(sql);
-
-        const sendEmail = require('./email/sendEmail.js');
-        sendEmail(email, code);
+        const ManagerDB = require('./sql_connection/ManagerDB.js');
+        const r = await new ManagerDB().sendNewAuthentication(userData);
+        socket.emit('new_authentication', r); 
     });
 
     socket.on('authenticating', async (authentication) => {
         const ManagerDB = require('./sql_connection/ManagerDB.js');
-        var r = await new ManagerDB().authenticate(authentication);
+        const r = await new ManagerDB().authenticate(authentication);
         socket.emit('_authenticating', r);
     });
 
@@ -73,4 +59,3 @@ io.on('connection', (socket) => {
 });
 
 http.listen(process.env.PORT || 3000, () => console.log('Servidor rodando!!!'));
-//http.listen(process.env.PORT || 3000, '192.168.1.66', () => console.log('Servidor rodando!!!'));
