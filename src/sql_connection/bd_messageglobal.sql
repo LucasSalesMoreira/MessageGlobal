@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.15.1
--- http://www.phpmyadmin.net
+-- version 5.0.2
+-- https://www.phpmyadmin.net/
 --
--- Host: mysql669.umbler.com
--- Generation Time: 12-Ago-2020 às 20:12
--- Versão do servidor: 5.6.40
--- PHP Version: 5.4.8
+-- Host: 127.0.0.1
+-- Tempo de geração: 14-Dez-2020 às 06:21
+-- Versão do servidor: 10.4.14-MariaDB
+-- versão do PHP: 7.4.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -17,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `bd_messageglobal`
+-- Banco de dados: `bd_messageglobal`
 --
 CREATE DATABASE IF NOT EXISTS `bd_messageglobal` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `bd_messageglobal`;
@@ -25,32 +26,99 @@ USE `bd_messageglobal`;
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `User`
+-- Estrutura da tabela `authentication`
 --
 
-DROP TABLE IF EXISTS `User`;
-CREATE TABLE IF NOT EXISTS `User` (
+DROP TABLE IF EXISTS `authentication`;
+CREATE TABLE `authentication` (
+  `code` varchar(5) NOT NULL,
+  `email` varchar(30) DEFAULT NULL,
+  `name` varchar(30) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `contacts`
+--
+
+DROP TABLE IF EXISTS `contacts`;
+CREATE TABLE `contacts` (
+  `email_user` varchar(30) DEFAULT NULL,
+  `email_contact` varchar(30) DEFAULT NULL,
+  `id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
   `name` varchar(30) DEFAULT NULL,
   `email` varchar(30) NOT NULL DEFAULT '',
-  `number` varchar(30) DEFAULT NULL
+  `password` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `User`
+-- Extraindo dados da tabela `user`
 --
 
-INSERT INTO `User` (`name`, `email`, `number`) VALUES
-('Lucas Sales', 'lucassalesmoreira161@gmail.com', '081987828792');
+INSERT INTO `user` (`name`, `email`, `password`) VALUES
+('Caio', 'caio@gmail.com', 'admin'),
+('Eduardo', 'eduardo@gmail.com', 'admin'),
+('LucasDev', 'lucasdevsoftware@gmail.com', 'admin'),
+('Lucas Sales', 'lucassalesmoreira161@gmail.com', '102414'),
+('Pupilo', 'pupilo@gmail.com', 'admin'),
+('Zeus', 'zeus@gmail.com', 'admin');
 
 --
--- Indexes for dumped tables
+-- Índices para tabelas despejadas
 --
 
 --
--- Indexes for table `User`
+-- Índices para tabela `authentication`
 --
-ALTER TABLE `User`
+ALTER TABLE `authentication`
+  ADD PRIMARY KEY (`code`);
+
+--
+-- Índices para tabela `contacts`
+--
+ALTER TABLE `contacts`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `email_user` (`email_user`),
+  ADD KEY `email_contact` (`email_contact`);
+
+--
+-- Índices para tabela `user`
+--
+ALTER TABLE `user`
   ADD PRIMARY KEY (`email`);
+
+--
+-- AUTO_INCREMENT de tabelas despejadas
+--
+
+--
+-- AUTO_INCREMENT de tabela `contacts`
+--
+ALTER TABLE `contacts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Restrições para despejos de tabelas
+--
+
+--
+-- Limitadores para a tabela `contacts`
+--
+ALTER TABLE `contacts`
+  ADD CONSTRAINT `contacts_ibfk_1` FOREIGN KEY (`email_user`) REFERENCES `user` (`email`),
+  ADD CONSTRAINT `contacts_ibfk_2` FOREIGN KEY (`email_contact`) REFERENCES `user` (`email`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

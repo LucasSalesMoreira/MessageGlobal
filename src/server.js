@@ -9,6 +9,8 @@ app.use(express.static(__dirname + '/public'));
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
+const statusUsers = { emails: [], sockets: [] };
+
 io.on('connection', (socket) => {
 
     console.log(`User ${socket.id} connected!`);
@@ -22,15 +24,27 @@ io.on('connection', (socket) => {
     socket.on('loadContacts', async (email) => {
         const ManagerDB = require('./sql_connection/ManagerDB.js');
         const contacts = await new ManagerDB().loadContacts(email);
+        statusUsers.emails.push(email);
+        statusUsers.sockets.push(socket);
         socket.emit('loadContacts', contacts);
     });
 
     socket.on('msg', async (msgObject) => {
         console.log(`New message: ${msgObject}`);
+        
+        var emailContact = msgObject.emailContact;
+        var index = statusUsers.emails.indexOf(emailContact);
+        
+        if (index >= 0) {
+            var contactSocket = statusUsers.sockets[index];
+            console.log(`Socket do contato: ${contactSocket.id}`);
+            contactSocket.emit('NEW_MSG', {msg: msgObject.text});
+        } else {
+            console.log(`User ${emailContact} encontra-se offline`);
+        }
+        
         const manager = new Manager();
         await manager.addMessage(msgObject);
-
-        //Continuar codigo de envio de mensagens...
     });
 
     socket.on('login', async (userData) => {
@@ -49,10 +63,15 @@ io.on('connection', (socket) => {
     socket.on('authenticating', async (authentication) => {
         const ManagerDB = require('./sql_connection/ManagerDB.js');
         const r = await new ManagerDB().authenticate(authentication);
-        socket.emit('_authenticating', r);
+        console.log(r);
+        socket.emit('authenticating', r);
     });
 
     socket.on('disconnect', () => {
+        var index = statusUsers.sockets.indexOf(socket);
+        const numOfElementsForRemove = 1;
+        statusUsers.sockets.splice(index, numOfElementsForRemove);
+        statusUsers.emails.splice(index, numOfElementsForRemove);
         console.log(`User ${socket.id} disconnected!`);
     });
 

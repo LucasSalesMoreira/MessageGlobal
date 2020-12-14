@@ -1,7 +1,8 @@
 module.exports = class ManagerBD {
-
+     
     constructor() {
         this.ConnectionDB = require('./ConnectionDB');
+        this.path = require('path');
     }
 
     async login(data) {
@@ -44,17 +45,17 @@ module.exports = class ManagerBD {
     async sendNewAuthentication(data) {
         var name = data.name;
         var email = data.email;
-        
-        const generate = require('./email/codeGenerator.js');
-        const code = generate();
+                                //D:\DEVELOPER\projects\MessageGlobal\src\email\codeGenerator.js
+        const generate = require(this.path.resolve('./src/email/codeGenerator.js'));
+        const code = generate(); //APENAS APOIS O DEPLOY NO SERVIDOR!
         
         const sql = `insert into authentication (code, email, name) values ('${code}', '${email}', '${name}')`;
         const connectionDB = new this.ConnectionDB(); 
         
         try {
             await connectionDB.execute(sql);
-            const sendEmail = require('./email/sendEmail.js');
-            sendEmail(email, code);
+            //const sendEmail = require('./email/sendEmail.js');
+            //sendEmail(email, code); APENAS APOIS O DEPLOY NO SERVIDOR!
             return { ok: true };
         } catch (error) {
             console.log(`Falha ao gerar nova autenticação -> ${error}`);
@@ -66,9 +67,9 @@ module.exports = class ManagerBD {
         const connectionDB = new this.ConnectionDB();
         
         try {
-            const sql_authentication = `select * from authentication where code = ${data.code}`;
-            var results = await connectionDB.searsh(sql_authentication);
-            
+            const sql_authentication = `select * from authentication where code = '${data.code}'`;
+            const r = await connectionDB.searsh(sql_authentication);
+            const results = r[0]; 
             if (results) {
                 const sql_new_user = `insert into User (name, email, password) values ('${results.name}', '${results.email}', '${data.password}')`;
                 const sql_delete_code = `delete from authentication where code = '${results.code}'`;

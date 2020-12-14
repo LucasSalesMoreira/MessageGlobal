@@ -28,7 +28,7 @@ module.exports = class Manager {
         try {
             return await this.readFile(url, 'utf8');
         } catch (error) {
-            console.log(`Error: ${error}`);
+            console.log(`Erro na leitura: ${error}`);
         }
     }
 
