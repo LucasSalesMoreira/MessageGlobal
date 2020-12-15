@@ -50,13 +50,20 @@ module.exports = class ManagerBD {
         const code = generate(); //APENAS APOIS O DEPLOY NO SERVIDOR!
         
         const sql = `insert into authentication (code, email, name) values ('${code}', '${email}', '${name}')`;
+        const sql_verify = `select email from user where email = '${email}'`;
         const connectionDB = new this.ConnectionDB(); 
         
         try {
-            await connectionDB.execute(sql);
-            //const sendEmail = require('./email/sendEmail.js');
-            //sendEmail(email, code); APENAS APOIS O DEPLOY NO SERVIDOR!
-            return { ok: true };
+            const result = await connectionDB.searsh(sql_verify);
+            if (!result[0]) {
+                await connectionDB.execute(sql);
+                //const sendEmail = require('./email/sendEmail.js');
+                //sendEmail(email, code); APENAS APOIS O DEPLOY NO SERVIDOR!
+                return { ok: true };
+            } else {
+                console.log('Email já cadastrado!');
+                return { ok: false };
+            }
         } catch (error) {
             console.log(`Falha ao gerar nova autenticação -> ${error}`);
             return { ok: false };
