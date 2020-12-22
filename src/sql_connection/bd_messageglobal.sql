@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 14-Dez-2020 às 06:21
+-- Tempo de geração: 22-Dez-2020 às 04:11
 -- Versão do servidor: 10.4.14-MariaDB
 -- versão do PHP: 7.4.10
 
@@ -36,6 +36,10 @@ CREATE TABLE `authentication` (
   `name` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- RELACIONAMENTOS PARA TABELAS `authentication`:
+--
+
 -- --------------------------------------------------------
 
 --
@@ -49,6 +53,40 @@ CREATE TABLE `contacts` (
   `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- RELACIONAMENTOS PARA TABELAS `contacts`:
+--   `email_user`
+--       `user` -> `email`
+--   `email_contact`
+--       `user` -> `email`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `session`
+--
+
+DROP TABLE IF EXISTS `session`;
+CREATE TABLE `session` (
+  `token` varchar(300) NOT NULL,
+  `email` varchar(30) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELACIONAMENTOS PARA TABELAS `session`:
+--   `email`
+--       `user` -> `email`
+--
+
+--
+-- Extraindo dados da tabela `session`
+--
+
+INSERT INTO `session` (`token`, `email`) VALUES
+('d95bcbae7404d0d324a1da97a06649a6979e0c722d396ce3ac1d6771b1c4ecf9', 'lucasdevsoftware@gmail.com'),
+('b8710817baf65d5c7d2e9c14151d39779c6cbaedbedd1e706f9be8068ef2431b', 'lucassalesmoreira161@gmail.com');
+
 -- --------------------------------------------------------
 
 --
@@ -59,20 +97,20 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `name` varchar(30) DEFAULT NULL,
   `email` varchar(30) NOT NULL DEFAULT '',
-  `password` varchar(30) DEFAULT NULL
+  `password` varchar(300) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELACIONAMENTOS PARA TABELAS `user`:
+--
 
 --
 -- Extraindo dados da tabela `user`
 --
 
 INSERT INTO `user` (`name`, `email`, `password`) VALUES
-('Caio', 'caio@gmail.com', 'admin'),
-('Eduardo', 'eduardo@gmail.com', 'admin'),
-('LucasDev', 'lucasdevsoftware@gmail.com', 'admin'),
-('Lucas Sales', 'lucassalesmoreira161@gmail.com', '102414'),
-('Pupilo', 'pupilo@gmail.com', 'admin'),
-('Zeus', 'zeus@gmail.com', 'admin');
+('LucasDev', 'lucasdevsoftware@gmail.com', '87274af01876341455b32d805946f272871bb42effa6604dccf28bb027afa82b'),
+('Lucas Sales', 'lucassalesmoreira161@gmail.com', 'a80cab26209c849092bd82f87b3ef9f277cc8d46c0ae055430d4170255bbb8a5');
 
 --
 -- Índices para tabelas despejadas
@@ -91,6 +129,13 @@ ALTER TABLE `contacts`
   ADD PRIMARY KEY (`id`),
   ADD KEY `email_user` (`email_user`),
   ADD KEY `email_contact` (`email_contact`);
+
+--
+-- Índices para tabela `session`
+--
+ALTER TABLE `session`
+  ADD PRIMARY KEY (`token`),
+  ADD KEY `email` (`email`);
 
 --
 -- Índices para tabela `user`
@@ -118,6 +163,12 @@ ALTER TABLE `contacts`
 ALTER TABLE `contacts`
   ADD CONSTRAINT `contacts_ibfk_1` FOREIGN KEY (`email_user`) REFERENCES `user` (`email`),
   ADD CONSTRAINT `contacts_ibfk_2` FOREIGN KEY (`email_contact`) REFERENCES `user` (`email`);
+
+--
+-- Limitadores para a tabela `session`
+--
+ALTER TABLE `session`
+  ADD CONSTRAINT `session_ibfk_1` FOREIGN KEY (`email`) REFERENCES `user` (`email`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

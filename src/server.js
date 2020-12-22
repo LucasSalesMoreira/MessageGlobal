@@ -53,6 +53,13 @@ io.on('connection', (socket) => {
         socket.emit('login', r);
     });
 
+    socket.on('token_validation', async (data) => {
+        // Validar token no banco
+        const ManagerDB = require('./sql_connection/ManagerDB.js');
+        const r = await new ManagerDB().loginByToken(data.token);
+        socket.emit('token_validation', r);
+    });
+
     socket.on('new_authentication', async (userData) => {
         //Enviar email de confirmação.
         const ManagerDB = require('./sql_connection/ManagerDB.js');
