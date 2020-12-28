@@ -48,11 +48,11 @@ module.exports = class ManagerBD {
         const encryptedTokenHash = this.crypto.createHash('sha256').update(token).digest('hex');
         console.log(`Token criptografado: ${encryptedTokenHash}`);
         const sql = `select u.email, u.name from user u join session s on u.email = s.email where s.token = '${encryptedTokenHash}'`;
-        
+
         try {
             const results = await connectionDB.searsh(sql);
             console.log(results[0].name + " --- " + results[0].email);
-            return { ok: true, email: results[0].email, name:  results[0].name};
+            return { ok: true, email: results[0].email, name: results[0].name };
         } catch (error) {
             return { ok: false };
         }
@@ -69,6 +69,43 @@ module.exports = class ManagerBD {
         } catch (error) {
             console.log(`Falha ao carregar os contatos: ${error}`);
             return null;
+        }
+    }
+
+    async loadMessages(emailObject) {
+        const userEmail = emailObject.userEmail;
+        const contactEmail = emailObject.contactEmail;
+        const sql = `select id, sender_email, inputer_email, text, DATE_FORMAT(date, '%d-%m-%Y %h-%i %p') as date from messages 
+        where inputer_email = '${userEmail}' 
+        and sender_email = '${contactEmail}' 
+        or inputer_email = '${contactEmail}'
+        and sender_email = '${userEmail}'`;
+
+        const connectionDB = new this.ConnectionDB();
+        
+        try {
+            const results = await connectionDB.searsh(sql);
+            console.log(`Mensagens carregadas -> ${JSON.stringify(results)}`);
+            return results;
+        } catch (error) {
+            console.log(`Falha ao carregar as mensagens: ${error}`);
+            return null;
+        }
+    }
+
+    async addMessage(msgObject) {
+        const senderEmail = msgObject.emailUser;
+        const inputerEmail = msgObject.emailContact;
+        const text = msgObject.text;
+        const sql = `insert into messages (sender_email, inputer_email, text, date) 
+            values ('${senderEmail}', '${inputerEmail}', '${text}', current_time())`;
+        const connectionDB = new this.ConnectionDB();
+        try {
+            await connectionDB.execute(sql);
+            return { ok: true };
+        } catch (error) {
+            console.log(`Falha ao salvar as mensagens: ${error}`);
+            return { ok: false };
         }
     }
 
