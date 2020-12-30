@@ -93,6 +93,19 @@ module.exports = class ManagerBD {
         }
     }
 
+    async searchEmails(data) {
+        const connectionDB = new this.ConnectionDB();
+        const sql = `select email, name from user where email like '${data.byte}%'`;
+        try {
+            const results = await connectionDB.searsh(sql);
+            console.log(`Emails encontrados -> ${JSON.stringify(results)}`);
+            return results;
+        } catch (error) {
+            console.log(`Falha ao buscar emails: ${error}`);
+            return null;
+        }
+    }
+
     async addMessage(msgObject) {
         const senderEmail = msgObject.emailUser;
         const inputerEmail = msgObject.emailContact;

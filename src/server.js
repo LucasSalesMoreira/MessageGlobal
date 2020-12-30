@@ -36,6 +36,12 @@ io.on('connection', (socket) => {
             console.log('ONLINE ---> '+statusUsers.emails[i]);
     });
 
+    socket.on('search_email', async (data) => {
+        const ManagerDB = require('./sql_connection/ManagerDB.js');
+        const r = await new ManagerDB().searchEmails(data);
+        socket.emit('loadMessages', r);
+    });
+
     socket.on('msg', async (msgObject) => {
         console.log(`New message: ${msgObject}`);
         
