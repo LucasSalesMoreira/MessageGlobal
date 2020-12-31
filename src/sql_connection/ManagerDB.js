@@ -95,7 +95,7 @@ module.exports = class ManagerBD {
 
     async searchEmails(data) {
         const connectionDB = new this.ConnectionDB();
-        const sql = `select email, name from user where email like '${data.byte}%'`;
+        const sql = `select email, name from user where email != '${data.emailUser}' and email like '${data.byte}%'`;
         try {
             const results = await connectionDB.searsh(sql);
             console.log(`Emails encontrados -> ${JSON.stringify(results)}`);
@@ -103,6 +103,25 @@ module.exports = class ManagerBD {
         } catch (error) {
             console.log(`Falha ao buscar emails: ${error}`);
             return null;
+        }
+    }
+
+    async addContact(data) {
+        const connectionDB = new this.ConnectionDB();
+        
+        const emailUser = data.emailUser;
+        const emailContact = data.emailContact;
+        
+        const sql = `insert into contacts (email_user, email_contact) values 
+        ('${emailUser}', '${emailContact}'), 
+        ('${emailContact}', '${emailUser}')`;
+        
+        try {
+            await connectionDB.execute(sql);
+            return { ok: true };
+        } catch (error) {
+            console.log(`Falha ao adicionar novo contato: ${error}`);
+            return { ok: false };
         }
     }
 

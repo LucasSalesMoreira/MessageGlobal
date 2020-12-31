@@ -39,7 +39,13 @@ io.on('connection', (socket) => {
     socket.on('search_email', async (data) => {
         const ManagerDB = require('./sql_connection/ManagerDB.js');
         const r = await new ManagerDB().searchEmails(data);
-        socket.emit('loadMessages', r);
+        socket.emit('search_email', r);
+    });
+
+    socket.on('add_contact', async (data) => {
+        const ManagerDB = require('./sql_connection/ManagerDB.js');
+        const r = await new ManagerDB().addContact(data);
+        socket.emit('add_contact', r);
     });
 
     socket.on('msg', async (msgObject) => {
