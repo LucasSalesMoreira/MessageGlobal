@@ -60,7 +60,7 @@ module.exports = class ManagerBD {
 
     async loadContacts(email) {
         const connectionDB = new this.ConnectionDB();
-        const sql = `select c.email_contact, u.name from contacts c join User u on u.email = c.email_contact where c.email_user = '${email}'`;
+        const sql = `select c.email_contact, u.name from contacts c join user u on u.email = c.email_contact where c.email_user = '${email}'`;
 
         try {
             var results = await connectionDB.searsh(sql);
