@@ -19,7 +19,7 @@ module.exports = class ConnectionDB {
         });
     }
 
-    searsh(sql) {
+    search(sql) {
         const conn = this.initConnection();
         return new Promise((resolve, reject) => {
             conn.connect((error) => {

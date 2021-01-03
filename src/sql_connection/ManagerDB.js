@@ -13,7 +13,7 @@ module.exports = class ManagerBD {
         console.log(encryptedPassword);
         const sqlLogin = `select * from user where email = '${data.email}' and password = '${encryptedPassword}'`;
         try {
-            const results = await connectionDB.searsh(sqlLogin);
+            const results = await connectionDB.search(sqlLogin);
             console.log(`Resultado do login -> ${JSON.stringify(results)}`);
 
             if (results[0] != null) {
@@ -22,7 +22,7 @@ module.exports = class ManagerBD {
                 const encryptedTokenHash = this.crypto.createHash('sha256').update(token).digest('hex');
                 console.log(`Token criptografado: ${encryptedTokenHash}`);
                 const sqlCountToken = `select count(token) as num_token from session where email = '${results[0].email}'`;
-                const resultsTokens = await connectionDB.searsh(sqlCountToken);
+                const resultsTokens = await connectionDB.search(sqlCountToken);
                 if (resultsTokens[0].num_token == 0) {
                     const sqlInsertToken = `insert into session (token, email) values ('${encryptedTokenHash}', '${results[0].email}')`;
                     await connectionDB.execute(sqlInsertToken);
@@ -50,7 +50,7 @@ module.exports = class ManagerBD {
         const sql = `select u.email, u.name from user u join session s on u.email = s.email where s.token = '${encryptedTokenHash}'`;
 
         try {
-            const results = await connectionDB.searsh(sql);
+            const results = await connectionDB.search(sql);
             console.log(results[0].name + " --- " + results[0].email);
             return { ok: true, email: results[0].email, name: results[0].name };
         } catch (error) {
@@ -63,7 +63,7 @@ module.exports = class ManagerBD {
         const sql = `select c.email_contact, u.name from contacts c join user u on u.email = c.email_contact where c.email_user = '${email}'`;
 
         try {
-            var results = await connectionDB.searsh(sql);
+            var results = await connectionDB.search(sql);
             console.log(`Contatos -> ${JSON.stringify(results)}`);
             return results;
         } catch (error) {
@@ -84,7 +84,7 @@ module.exports = class ManagerBD {
         const connectionDB = new this.ConnectionDB();
         
         try {
-            const results = await connectionDB.searsh(sql);
+            const results = await connectionDB.search(sql);
             console.log(`Mensagens carregadas -> ${JSON.stringify(results)}`);
             return results;
         } catch (error) {
@@ -97,7 +97,7 @@ module.exports = class ManagerBD {
         const connectionDB = new this.ConnectionDB();
         const sql = `select email, name from user where email != '${data.emailUser}' and email like '${data.byte}%'`;
         try {
-            const results = await connectionDB.searsh(sql);
+            const results = await connectionDB.search(sql);
             console.log(`Emails encontrados -> ${JSON.stringify(results)}`);
             return results;
         } catch (error) {
@@ -111,14 +111,24 @@ module.exports = class ManagerBD {
         
         const emailUser = data.emailUser;
         const emailContact = data.emailContact;
-        
+
+        const sql_verify = `select * from contacts where 
+        email_user = '${emailUser}' 
+        and email_contact = '${emailContact}' 
+        or email_user = '${emailContact}' 
+        and email_contact = '${emailUser}'`;
         const sql = `insert into contacts (email_user, email_contact) values 
         ('${emailUser}', '${emailContact}'), 
         ('${emailContact}', '${emailUser}')`;
         
         try {
-            await connectionDB.execute(sql);
-            return { ok: true };
+            const result = connectionDB.search(sql_verify);
+            if (!result[0]) {
+                await connectionDB.execute(sql);
+                return { ok: true };
+            } else {
+                return { ok: false };
+            }
         } catch (error) {
             console.log(`Falha ao adicionar novo contato: ${error}`);
             return { ok: false };
@@ -153,7 +163,7 @@ module.exports = class ManagerBD {
         const connectionDB = new this.ConnectionDB();
 
         try {
-            const result = await connectionDB.searsh(sql_verify);
+            const result = await connectionDB.search(sql_verify);
             if (!result[0]) {
                 await connectionDB.execute(sql);
                 //const sendEmail = require('./email/sendEmail.js');
@@ -174,7 +184,7 @@ module.exports = class ManagerBD {
 
         try {
             const sql_authentication = `select * from authentication where code = '${data.code}'`;
-            const r = await connectionDB.searsh(sql_authentication);
+            const r = await connectionDB.search(sql_authentication);
             const results = r[0];
             if (results) {
                 const encryptedPassword = this.crypto.createHash('sha256').update(data.password).digest('hex');
