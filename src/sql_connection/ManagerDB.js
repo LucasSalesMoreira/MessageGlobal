@@ -166,7 +166,7 @@ module.exports = class ManagerBD {
             const result = await connectionDB.search(sql_verify);
             if (!result[0]) {
                 await connectionDB.execute(sql);
-                const sendEmail = require('./src/email/sendEmail.js');
+                const sendEmail = require(this.path.resolve('./src/email/sendEmail.js'));
                 sendEmail(email, code);
                 return { ok: true };
             } else {
