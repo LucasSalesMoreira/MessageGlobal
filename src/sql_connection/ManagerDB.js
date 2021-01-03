@@ -122,7 +122,7 @@ module.exports = class ManagerBD {
         ('${emailContact}', '${emailUser}')`;
         
         try {
-            const result = connectionDB.search(sql_verify);
+            const result = await connectionDB.search(sql_verify);
             if (!result[0]) {
                 await connectionDB.execute(sql);
                 return { ok: true };
