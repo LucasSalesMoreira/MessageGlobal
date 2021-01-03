@@ -166,8 +166,8 @@ module.exports = class ManagerBD {
             const result = await connectionDB.search(sql_verify);
             if (!result[0]) {
                 await connectionDB.execute(sql);
-                //const sendEmail = require('./email/sendEmail.js');
-                //sendEmail(email, code); APENAS APOIS O DEPLOY NO SERVIDOR!
+                const sendEmail = require('./email/sendEmail.js');
+                sendEmail(email, code);
                 return { ok: true };
             } else {
                 console.log('Email já cadastrado!');
