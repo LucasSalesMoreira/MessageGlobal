@@ -10,6 +10,7 @@ const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
 const statusUsers = { emails: [], sockets: [] };
+const numOfElementsForRemove = 1;
 
 io.on('connection', (socket) => {
 
@@ -29,9 +30,19 @@ io.on('connection', (socket) => {
     socket.on('loadContacts', async (email) => {
         const ManagerDB = require('./sql_connection/ManagerDB.js');
         const contacts = await new ManagerDB().loadContacts(email);
+        
+        var index = statusUsers.emails.indexOf(email);
+
+        if (index >= 0) {
+            statusUsers.sockets.splice(index, numOfElementsForRemove);
+            statusUsers.emails.splice(index, numOfElementsForRemove);
+        }
+        
         statusUsers.emails.push(email);
         statusUsers.sockets.push(socket);
+        
         socket.emit('loadContacts', contacts);
+
         for (i = 0; i < statusUsers.emails.length; i++)
             console.log('ONLINE ---> '+statusUsers.emails[i]);
     });
@@ -101,7 +112,6 @@ io.on('connection', (socket) => {
 
     socket.on('disconnect', () => {
         var index = statusUsers.sockets.indexOf(socket);
-        const numOfElementsForRemove = 1;
         if (index >= 0) {
             statusUsers.sockets.splice(index, numOfElementsForRemove);
             statusUsers.emails.splice(index, numOfElementsForRemove);
