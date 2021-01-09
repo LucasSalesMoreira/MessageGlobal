@@ -73,12 +73,11 @@ io.on('connection', (socket) => {
             console.log(`Socket do contato: ${contactSocket.id}`);
             contactSocket.emit('NEW_MSG_IN_HOME', {msg: msgObject.text});
             contactSocket.emit('NEW_MSG_IN_CHAT', {msg: msgObject.text});
+            contactSocket.emit('NOTIFY_NEW_MSG', {contact: msgObject.userName, msg: msgObject.text});
         } else {
             console.log(`User ${emailContact} encontra-se offline`);
         }
         
-        /*const manager = new Manager();
-        await manager.addMessage(msgObject);*/
         const ManagerDB = require('./sql_connection/ManagerDB.js');
         await new ManagerDB().addMessage(msgObject);
     });
