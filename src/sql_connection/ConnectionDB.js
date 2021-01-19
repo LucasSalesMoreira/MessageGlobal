@@ -5,11 +5,11 @@ module.exports = class ConnectionDB {
     }
 
     initConnection() {
-        const host_db = "localhost";//process.env.host_db;
-        const port_db = 3306;//process.env.port_db;
-        const user_db = "root";//process.env.user_db;
-        const pass_db = null;//process.env.pass_db;
-        const db = "bd_messageglobal";//process.env.name_db;
+        const host_db = process.env.host_db;
+        const port_db = process.env.port_db;
+        const user_db = process.env.user_db;
+        const pass_db = process.env.pass_db;
+        const db = process.env.name_db;
         return this.mysql.createConnection({
             host: host_db,
             port: port_db,
