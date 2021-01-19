@@ -1,7 +1,7 @@
 module.exports = (email, code) => {
     const nodemailer = require('nodemailer');
 
-    const myEmail = 'darksheet@messageglobalapp.com';
+    const myEmail = 'lucassales@messageglobalapp.com';
     const password = process.env.pass_email;
 
     const transport = nodemailer.createTransport({
