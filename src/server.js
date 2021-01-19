@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const { emit } = require('process');
 //const Manager = require(path.resolve('src/fileManager/Manager.js'));
 const Manager = require('./fileManager/Manager.js');
 
@@ -10,6 +11,7 @@ const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
 const statusUsers = { emails: [], sockets: [] };
+const statusServices = { emails: [], sockets: [] };
 const numOfElementsForRemove = 1;
 
 io.on('connection', (socket) => {
@@ -47,6 +49,21 @@ io.on('connection', (socket) => {
             console.log('ONLINE ---> '+statusUsers.emails[i]);
     });
 
+    socket.on('notification_socket_record', (email) => {
+        var index = statusServices.emails.indexOf(email);
+
+        if (index >= 0) {
+            statusServices.sockets.splice(index, numOfElementsForRemove);
+            statusServices.emails.splice(index, numOfElementsForRemove);
+        }
+        
+        statusServices.emails.push(email);
+        statusServices.sockets.push(socket);
+
+        for (i = 0; i < statusServices.emails.length; i++)
+            console.log('ONLINE ---> '+statusServices.emails[i]);
+    });
+
     socket.on('search_email', async (data) => {
         const ManagerDB = require('./sql_connection/ManagerDB.js');
         const r = await new ManagerDB().searchEmails(data);
@@ -71,11 +88,18 @@ io.on('connection', (socket) => {
         if (index >= 0) {
             var contactSocket = statusUsers.sockets[index];
             console.log(`Socket do contato: ${contactSocket.id}`);
-            contactSocket.emit('NEW_MSG_IN_HOME', {msg: msgObject.text});
             contactSocket.emit('NEW_MSG_IN_CHAT', {msg: msgObject.text});
-            contactSocket.emit('NOTIFY_NEW_MSG', {contact: msgObject.userName, msg: msgObject.text});
         } else {
             console.log(`User ${emailContact} encontra-se offline`);
+        }
+
+        var notificationServiceIndex = statusServices.emails.indexOf(emailContact);
+
+        if (notificationServiceIndex >= 0) {
+            var contactNotificationSocket = statusServices.sockets[notificationServiceIndex];
+            contactNotificationSocket.emit('NOTIFY_NEW_MSG', {contact: msgObject.userName, msg: msgObject.text});
+        } else {
+            console.log(`Serviço do user ${emailContact} encontra-se offline`);
         }
         
         const ManagerDB = require('./sql_connection/ManagerDB.js');
@@ -116,6 +140,14 @@ io.on('connection', (socket) => {
             statusUsers.emails.splice(index, numOfElementsForRemove);
             console.log(`Index de usuário removido ---> ${index}`);
         }
+
+        var notificationServiceIndex = statusServices.sockets.indexOf(socket);
+        if (notificationServiceIndex >= 0) {
+            statusServices.sockets.splice(notificationServiceIndex, numOfElementsForRemove);
+            statusServices.emails.splice(notificationServiceIndex, numOfElementsForRemove);
+            console.log(`Index de serviço de usuário removido ---> ${notificationServiceIndex}`);
+        }
+
         console.log(`User ${socket.id} disconnected!`);
     });
 
