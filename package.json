@@ -4,7 +4,7 @@
   "description": "servidor do chat",
   "main": "src/server.js",
   "dependencies": {
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "crypto": "^1.0.1",
     "express": "^4.17.1",
     "knex": "^0.21.5",
