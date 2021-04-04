@@ -23,10 +23,6 @@ Obter pelo Git:
 👉 Criar banco de dados e impertar de: MessageGlobal/src/sql_connection/bd_messageglobal.sql
 ```
 
-## ⚙️ Executando testes
-
-Explicar como executar os testes automatizados para este sistema.
-
 ## 🛠️ Construído com
 
 Tecnologias utilizadas no projeto
