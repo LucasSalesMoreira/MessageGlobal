@@ -11,8 +11,8 @@ Consulte **Implantação** para saber como implantar o projeto.
 ### 📋 Pré-requisitos
 * RAM - 225MB
 * Armazenamento livre - 20MB 
-* NodeJs - 12.19.0
-* MySQL - 10.4.14-MariaDB 
+* NodeJs - v12.19.0
+* MySQL - v10.4.14-MariaDB 
 
 ### 🔧 Instalação
 
@@ -36,14 +36,14 @@ Mencione as ferramentas que você usou para criar seu projeto
 * [ROME](https://rometools.github.io/rome/) - Usada para gerar RSS
 
 ## 🖇️ Colaborando
-
+Estou fazendo review de todos os pull requests enviados, colabore comigo!
 ## 📌 Versão
 
-Nós usamos [SemVer](http://semver.org/) para controle de versão. Para as versões disponíveis, observe as [tags neste repositório](https://github.com/suas/tags/do/projeto). 
+O projeto ainda encontra-se em processo de desenvolvimento, não possui nenhuma versão em produção
 
 ## 📄 Licença
 
 Este projeto está sob a licença (GNU)
 
 ---
-⌨️ com ❤️ por [Lucas Sales](https://github.com/LucasSalesMoreira) 😊
+✍ com ❤️ por [Lucas Sales](https://github.com/LucasSalesMoreira) 😊
