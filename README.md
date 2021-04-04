@@ -9,12 +9,10 @@ Essas instruções permitirão que você obtenha uma cópia do projeto em opera�
 Consulte **Implantação** para saber como implantar o projeto.
 
 ### 📋 Pré-requisitos
-
-De que coisas você precisa para instalar o software e como instalá-lo?
-
-```
-Dar exemplos
-```
+* RAM - 225MB
+* Armazenamento livre - 20MB 
+* NodeJs - 12.19.0
+* MySQL - 10.4.14-MariaDB 
 
 ### 🔧 Instalação
 
