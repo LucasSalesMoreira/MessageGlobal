@@ -27,15 +27,15 @@ Obter pelo Git
 
 Tecnologias utilizadas no projeto
 
-* [Node.js](https://nodejs.org) - Interpretador JavaScript.
-* [MariaDB](https://www.apachefriends.org) - Servidor de banco de dados.
-* [Express.js](https://expressjs.com) - Framework web.
-* [Socket.io](https://socket.io) - Lib para abstração de WebSocket.
-* [mysql.js](https://www.npmjs.com/package/mysql) - Drive de conexão com banco de dados MySQL.
-* [crypto.js](https://www.npmjs.com/package/crypto) - Lib de criptografia.
-* [nodemailer.js](https://www.npmjs.com/package/nodemailer) - Lib para envio de email.
-* [nodemailer-smtp-transport.js](https://www.npmjs.com/package/nodemailer-smtp-transport) - Lib de extensão da nodemailer.js.
-* [uuid.js](https://www.npmjs.com/package/uuid) - Lib para gerar identificador único.
+* [Node.js](https://nodejs.org) - Interpretador JavaScript 01001001🔍
+* [MariaDB](https://www.apachefriends.org) - Servidor de banco de dados 🎲
+* [Express.js](https://expressjs.com) - Framework web World Wide Web 🖥🖱🌍
+* [Socket.io](https://socket.io) - Lib para abstração de WebSocket ⌚
+* [mysql.js](https://www.npmjs.com/package/mysql) - Drive de conexão com banco de dados MySQL 🚕🎲
+* [crypto.js](https://www.npmjs.com/package/crypto) - Lib de criptografia 🔐
+* [nodemailer.js](https://www.npmjs.com/package/nodemailer) - Lib para envio de email 📧
+* [nodemailer-smtp-transport.js](https://www.npmjs.com/package/nodemailer-smtp-transport) - Lib de extensão da nodemailer.js 📧
+* [uuid.js](https://www.npmjs.com/package/uuid) - Lib para gerar identificador único 🆔
 
 ## 🖇️ Colaborando
 Estou fazendo review de todos os pull requests enviados, colabore comigo!
