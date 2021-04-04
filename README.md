@@ -16,7 +16,7 @@ Consulte **Implantação** para saber como implantar o projeto.
 
 ### 🔧 Instalação
 
-Obter pelo Git:
+Obter pelo Git
 ```
 👉 Fazer um fork nesse repositório.
 👉 Executar este comando no seu terminal: git clone https://github.com/LucasSalesMoreira/MessageGlobal.git
